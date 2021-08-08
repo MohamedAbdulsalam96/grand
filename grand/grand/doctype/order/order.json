@@ -35,14 +35,14 @@
    "fieldname": "existing_supplier",
    "fieldtype": "Check",
    "label": "Existing Supplier",
-   "read_only_depends_on": "eval: [\"Reject\", \"Approved\",\"SKU Approved\",\"SKU Rejected\",\"Identifying Competitor Product\",\"Checking Requirement\",\"Finalizing Order Quantity\",\"Negotiating Price\"].includes(doc.status)"
+   "read_only_depends_on": "eval: [\"Rejected\", \"Approved\",\"SKU Approved\",\"SKU Rejected\",\"Identifying Competitor Product\",\"Checking Requirement\",\"Finalizing Order Quantity\",\"Negotiating Price\"].includes(doc.status)"
   },
   {
    "default": "0",
    "fieldname": "reorder",
    "fieldtype": "Check",
    "label": "Reorder",
-   "read_only_depends_on": "eval: [\"Reject\", \"Approved\",\"SKU Approved\",\"SKU Rejected\",\"Identifying Competitor Product\",\"Checking Requirement\",\"Finalizing Order Quantity\",\"Negotiating Price\"].includes(doc.status)"
+   "read_only_depends_on": "eval: [\"Rejected\", \"Approved\",\"SKU Approved\",\"SKU Rejected\",\"Identifying Competitor Product\",\"Checking Requirement\",\"Finalizing Order Quantity\",\"Negotiating Price\"].includes(doc.status)"
   },
   {
    "fetch_from": "supplier_master.supplier_name",
@@ -51,7 +51,7 @@
    "fieldtype": "Data",
    "label": "Supplier Name",
    "read_only": 1,
-   "read_only_depends_on": "eval: [\"Reject\", \"Approved\",\"SKU Approved\",\"SKU Rejected\",\"Identifying Competitor Product\",\"Checking Requirement\",\"Finalizing Order Quantity\",\"Negotiating Price\"].includes(doc.status)"
+   "read_only_depends_on": "eval: [\"Rejected\", \"Approved\",\"SKU Approved\",\"SKU Rejected\",\"Identifying Competitor Product\",\"Checking Requirement\",\"Finalizing Order Quantity\",\"Negotiating Price\"].includes(doc.status)"
   },
   {
    "fieldname": "column_break_5",
@@ -61,21 +61,21 @@
    "fieldname": "date_of_requirement",
    "fieldtype": "Date",
    "label": "Date of Requirement",
-   "read_only_depends_on": "eval: [\"Reject\", \"Approved\",\"SKU Approved\",\"SKU Rejected\",\"Identifying Competitor Product\",\"Checking Requirement\",\"Finalizing Order Quantity\",\"Negotiating Price\"].includes(doc.status)"
+   "read_only_depends_on": "eval: [\"Rejected\", \"Approved\",\"SKU Approved\",\"SKU Rejected\",\"Identifying Competitor Product\",\"Checking Requirement\",\"Finalizing Order Quantity\",\"Negotiating Price\"].includes(doc.status)"
   },
   {
    "default": "0",
    "fieldname": "advance_payment",
    "fieldtype": "Check",
    "label": "Advance Payment",
-   "read_only_depends_on": "eval: [\"Reject\", \"Approved\",\"SKU Approved\",\"SKU Rejected\",\"Identifying Competitor Product\",\"Checking Requirement\",\"Finalizing Order Quantity\",\"Negotiating Price\"].includes(doc.status)"
+   "read_only_depends_on": "eval: [\"Rejected\", \"Approved\",\"SKU Approved\",\"SKU Rejected\",\"Identifying Competitor Product\",\"Checking Requirement\",\"Finalizing Order Quantity\",\"Negotiating Price\"].includes(doc.status)"
   },
   {
    "fieldname": "priority",
    "fieldtype": "Select",
    "label": "Priority",
    "options": "High\nMedium\nLow",
-   "read_only_depends_on": "eval: [\"Reject\", \"Approved\",\"SKU Approved\",\"SKU Rejected\",\"Identifying Competitor Product\",\"Checking Requirement\",\"Finalizing Order Quantity\",\"Negotiating Price\"].includes(doc.status)"
+   "read_only_depends_on": "eval: [\"Rejected\", \"Approved\",\"SKU Approved\",\"SKU Rejected\",\"Identifying Competitor Product\",\"Checking Requirement\",\"Finalizing Order Quantity\",\"Negotiating Price\"].includes(doc.status)"
   },
   {
    "fieldname": "section_break_9",
@@ -86,7 +86,7 @@
    "fieldtype": "Table",
    "label": "Order Items",
    "options": "Order Item",
-   "read_only_depends_on": "eval: [\"Reject\", \"Approved\",\"SKU Approved\",\"SKU Rejected\",\"Identifying Competitor Product\",\"Checking Requirement\",\"Finalizing Order Quantity\",\"Negotiating Price\"].includes(doc.status)"
+   "read_only_depends_on": "eval: [\"Rejected\", \"Approved\",\"SKU Approved\",\"SKU Rejected\",\"Identifying Competitor Product\",\"Checking Requirement\",\"Finalizing Order Quantity\",\"Negotiating Price\"].includes(doc.status)"
   },
   {
    "depends_on": "eval: doc.existing_supplier",
@@ -94,21 +94,21 @@
    "fieldtype": "Link",
    "label": "Supplier",
    "options": "Supplier",
-   "read_only_depends_on": "eval: [\"Reject\", \"Approved\",\"SKU Approved\",\"SKU Rejected\",\"Identifying Competitor Product\",\"Checking Requirement\",\"Finalizing Order Quantity\",\"Negotiating Price\"].includes(doc.status)"
+   "read_only_depends_on": "eval: [\"Rejected\", \"Approved\",\"SKU Approved\",\"SKU Rejected\",\"Identifying Competitor Product\",\"Checking Requirement\",\"Finalizing Order Quantity\",\"Negotiating Price\"].includes(doc.status)"
   },
   {
    "depends_on": "eval: !doc.existing_supplier",
    "fieldname": "supplier",
    "fieldtype": "Data",
    "label": "Supplier",
-   "read_only_depends_on": "eval: [\"Reject\", \"Approved\",\"SKU Approved\",\"SKU Rejected\",\"Identifying Competitor Product\",\"Checking Requirement\",\"Finalizing Order Quantity\",\"Negotiating Price\"].includes(doc.status)"
+   "read_only_depends_on": "eval: [\"Rejected\", \"Approved\",\"SKU Approved\",\"SKU Rejected\",\"Identifying Competitor Product\",\"Checking Requirement\",\"Finalizing Order Quantity\",\"Negotiating Price\"].includes(doc.status)"
   },
   {
    "fieldname": "requirement",
    "fieldtype": "Link",
    "label": "Requirement",
    "options": "Requirement",
-   "read_only_depends_on": "eval: [\"Reject\", \"Approved\",\"SKU Approved\",\"SKU Rejected\",\"Identifying Competitor Product\",\"Checking Requirement\",\"Finalizing Order Quantity\",\"Negotiating Price\"].includes(doc.status)"
+   "read_only_depends_on": "eval: [\"Rejected\", \"Approved\",\"SKU Approved\",\"SKU Rejected\",\"Identifying Competitor Product\",\"Checking Requirement\",\"Finalizing Order Quantity\",\"Negotiating Price\"].includes(doc.status)"
   },
   {
    "default": "OGCC / YY-",
@@ -178,7 +178,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-08-08 16:46:45.612823",
+ "modified": "2021-08-08 21:16:29.033972",
  "modified_by": "Administrator",
  "module": "Grand",
  "name": "Order",

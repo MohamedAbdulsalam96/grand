@@ -1,11 +1,13 @@
 {
  "actions": [],
+ "autoname": "naming_series:",
  "creation": "2021-08-05 23:49:28.701524",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "series",
+  "status",
+  "naming_series",
   "supplier",
   "supplier_name",
   "purchase_order_ref",
@@ -71,6 +73,7 @@
    "fieldtype": "Section Break"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "order_tracking_location",
    "fieldtype": "Table",
    "label": "Order Tracking Location",
@@ -83,17 +86,25 @@
    "options": "Order Tracking Item"
   },
   {
-   "fieldname": "series",
+   "fieldname": "naming_series",
    "fieldtype": "Select",
    "hidden": 1,
    "label": "Series",
    "options": "OTGCC / YY-"
+  },
+  {
+   "default": "Waiting",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Status",
+   "options": "Waiting\nIn Production\nPacking\nReady for Shipment\nWaiting for Shipment\nShipped\nReceiving to Store\nDispatching to Store\nCompleted"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-08-08 16:36:41.779714",
+ "modified": "2021-08-08 21:56:22.682606",
  "modified_by": "Administrator",
  "module": "Grand",
  "name": "Order Tracking",

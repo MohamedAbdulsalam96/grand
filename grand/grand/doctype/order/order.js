@@ -17,6 +17,7 @@ function change_status(cur_frm,status) {
     })
 
 }
+var existing_po = false
 frappe.ui.form.on('Order', {
     onload: function(){
         var item_name_master = frappe.meta.get_docfield("Order Item", "item_name_master", cur_frm.doc.name);
@@ -38,6 +39,17 @@ frappe.ui.form.on('Order', {
 
             });
         }
+         cur_frm.call({
+            doc: cur_frm.doc,
+            method: 'check_po',
+            args: {},
+            freeze: true,
+            freeze_message: "Check PO...",
+            async: false,
+            callback: (r) => {
+                existing_po = r.message
+             }
+        })
        cur_frm.set_query('requirement', () => {
             return {
                 filters: [
@@ -52,7 +64,7 @@ frappe.ui.form.on('Order', {
         item_name_master.read_only = !cur_frm.doc.reorder
         item_name.read_only = cur_frm.doc.reorder
         item_description.read_only = cur_frm.doc.reorder
-            if(cur_frm.doc.status === "Pending"){
+            if(!cur_frm.doc.docstatus && !cur_frm.is_new() && cur_frm.doc.status === "Pending" && cur_frm.doc.with_sku < 1){
                 var button1 = cur_frm.add_custom_button(__("Identifying Competitor Product"), () => {
                     change_status(cur_frm,"Identifying Competitor Product")
                 });
@@ -63,14 +75,37 @@ frappe.ui.form.on('Order', {
                  var button1 = cur_frm.add_custom_button(__("Identifying Competitor Product"), () => {
                     change_status(cur_frm,"Identifying Competitor Product")
                 });
-            } else if(["SKU Rejected", "Rejected", "Approved"].includes(cur_frm.doc.status)){
+            } else if(cur_frm.doc.status === "Approved" && !existing_po){
                  cur_frm.page.clear_actions_menu()
                 cur_frm.disable_save()
-                if(cur_frm.doc.status === "Approved"){
                       var button4 = cur_frm.add_custom_button(__("Purchase Order"), () => {
-                            console.log("Purchase Order")
+                            cur_frm.call({
+                                doc: cur_frm.doc,
+                                method: 'generate_po',
+                                args: {},
+                                freeze: true,
+                                freeze_message: "Generating Purchase Order...",
+                                async: false,
+                                callback: (r) => {
+                                    cur_frm.reload_doc()
+                                    frappe.set_route("Form", "Purchase Order", r.message);
+                                }
+                            })
                         });
-                }
+
+            } else if(cur_frm.doc.status === "Approved" && existing_po){
+                 cur_frm.page.clear_actions_menu()
+                cur_frm.disable_save()
+
+
+            } else if(cur_frm.doc.status === "Rejected"){
+                 cur_frm.page.clear_actions_menu()
+                cur_frm.enable_save()
+
+            } else if(cur_frm.doc.status === "SKU Rejected"){
+                 cur_frm.page.clear_actions_menu()
+                cur_frm.enable_save()
+
             } else if(cur_frm.doc.status === "Identifying Competitor Product"){
 
                 cur_frm.page.clear_actions_menu()
@@ -179,8 +214,6 @@ frappe.ui.form.on('Order', {
 
     },
     create_items: function(frm) {
-	    cur_frm.clear_table("order_items")
-        cur_frm.refresh_field("order_items")
 	    if(!cur_frm.doc.reorder){
 	       cur_frm.call({
                 doc: cur_frm.doc,
