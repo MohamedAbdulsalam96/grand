@@ -5,6 +5,7 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "series",
   "supplier",
   "supplier_name",
   "purchase_order_ref",
@@ -80,12 +81,19 @@
    "fieldtype": "Table",
    "label": "Order Tracking Items",
    "options": "Order Tracking Item"
+  },
+  {
+   "fieldname": "series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Series",
+   "options": "OTGCC / YY-"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-08-06 22:24:41.165131",
+ "modified": "2021-08-08 16:36:41.779714",
  "modified_by": "Administrator",
  "module": "Grand",
  "name": "Order Tracking",

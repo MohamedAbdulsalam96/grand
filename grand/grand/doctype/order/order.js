@@ -28,6 +28,16 @@ frappe.ui.form.on('Order', {
         item_description.read_only = cur_frm.doc.reorder
     },
     refresh: function () {
+        if(!cur_frm.doc.docstatus && !cur_frm.is_new() && cur_frm.doc.with_sku > 0){
+            cur_frm.page.add_action_item(__("Approve SKU"), function() {
+               change_status(cur_frm,"SKU Approved")
+
+            });
+            cur_frm.page.add_action_item(__("Reject SKU"), function() {
+               change_status(cur_frm,"SKU Rejected")
+
+            });
+        }
        cur_frm.set_query('requirement', () => {
             return {
                 filters: [
@@ -42,21 +52,61 @@ frappe.ui.form.on('Order', {
         item_name_master.read_only = !cur_frm.doc.reorder
         item_name.read_only = cur_frm.doc.reorder
         item_description.read_only = cur_frm.doc.reorder
-        if(cur_frm.doc.with_sku <= 0 || (cur_frm.doc.with_sku > 0 && cur_frm.doc.approved_new_sku)){
-            if(cur_frm.doc.workflow_state === "Identifying Competitor Product"){
+            if(cur_frm.doc.status === "Pending"){
+                var button1 = cur_frm.add_custom_button(__("Identifying Competitor Product"), () => {
+                    change_status(cur_frm,"Identifying Competitor Product")
+                });
+            } else if(cur_frm.doc.status === "SKU Approved"){
+                cur_frm.page.clear_actions_menu()
+                cur_frm.disable_save()
+
+                 var button1 = cur_frm.add_custom_button(__("Identifying Competitor Product"), () => {
+                    change_status(cur_frm,"Identifying Competitor Product")
+                });
+            } else if(["SKU Rejected", "Rejected", "Approved"].includes(cur_frm.doc.status)){
+                 cur_frm.page.clear_actions_menu()
+                cur_frm.disable_save()
+                if(cur_frm.doc.status === "Approved"){
+                      var button4 = cur_frm.add_custom_button(__("Purchase Order"), () => {
+                            console.log("Purchase Order")
+                        });
+                }
+            } else if(cur_frm.doc.status === "Identifying Competitor Product"){
+
+                cur_frm.page.clear_actions_menu()
+                cur_frm.disable_save()
                 var button1 = cur_frm.add_custom_button(__("Checking Requirement"), () => {
                     change_status(cur_frm,"Checking Requirement")
                 });
-            } else  if( cur_frm.doc.workflow_state === "Checking Requirement"){
+            } else  if( cur_frm.doc.status === "Checking Requirement"){
+
+                cur_frm.page.clear_actions_menu()
+                cur_frm.disable_save()
                 var button2 = cur_frm.add_custom_button(__("Finalizing Order Quantity"), () => {
                         change_status(cur_frm,"Finalizing Order Quantity")
                 });
-            } else  if(cur_frm.doc.workflow_state === "Finalizing Order Quantity"){
+            } else  if(cur_frm.doc.status === "Finalizing Order Quantity"){
+                cur_frm.page.clear_actions_menu()
+                cur_frm.disable_save()
+
                 var button3 = cur_frm.add_custom_button(__("Negotiating Price"), () => {
                     change_status(cur_frm,"Negotiating Price")
                 });
+
+            } else if (cur_frm.doc.status === "Negotiating Price"){
+                cur_frm.page.clear_actions_menu()
+                cur_frm.disable_save()
+
+                cur_frm.page.add_action_item(__("Approve"), function() {
+                    change_status(cur_frm,"Approved")
+
+                });
+                cur_frm.page.add_action_item(__("Reject"), function() {
+                   change_status(cur_frm,"Rejected")
+
+                });
+
             }
-        }
 
         if(cur_frm.doc.advance_payment){
            cur_frm.add_custom_button(__("Payment Entry"), () => {

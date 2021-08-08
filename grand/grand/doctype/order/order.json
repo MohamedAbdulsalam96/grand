@@ -16,7 +16,6 @@
   "supplier_name",
   "create_supplier",
   "column_break_5",
-  "approved_new_sku",
   "date_of_requirement",
   "advance_payment",
   "priority",
@@ -24,6 +23,8 @@
   "order_items",
   "create_items",
   "more_information_section",
+  "sku_rejection_note",
+  "order_rejection_note",
   "purchase_order",
   "with_sku",
   "amended_from"
@@ -33,13 +34,15 @@
    "default": "0",
    "fieldname": "existing_supplier",
    "fieldtype": "Check",
-   "label": "Existing Supplier"
+   "label": "Existing Supplier",
+   "read_only_depends_on": "eval: [\"Reject\", \"Approved\",\"SKU Approved\",\"SKU Rejected\",\"Identifying Competitor Product\",\"Checking Requirement\",\"Finalizing Order Quantity\",\"Negotiating Price\"].includes(doc.status)"
   },
   {
    "default": "0",
    "fieldname": "reorder",
    "fieldtype": "Check",
-   "label": "Reorder"
+   "label": "Reorder",
+   "read_only_depends_on": "eval: [\"Reject\", \"Approved\",\"SKU Approved\",\"SKU Rejected\",\"Identifying Competitor Product\",\"Checking Requirement\",\"Finalizing Order Quantity\",\"Negotiating Price\"].includes(doc.status)"
   },
   {
    "fetch_from": "supplier_master.supplier_name",
@@ -47,7 +50,8 @@
    "fieldname": "supplier_name",
    "fieldtype": "Data",
    "label": "Supplier Name",
-   "read_only": 1
+   "read_only": 1,
+   "read_only_depends_on": "eval: [\"Reject\", \"Approved\",\"SKU Approved\",\"SKU Rejected\",\"Identifying Competitor Product\",\"Checking Requirement\",\"Finalizing Order Quantity\",\"Negotiating Price\"].includes(doc.status)"
   },
   {
    "fieldname": "column_break_5",
@@ -56,19 +60,22 @@
   {
    "fieldname": "date_of_requirement",
    "fieldtype": "Date",
-   "label": "Date of Requirement"
+   "label": "Date of Requirement",
+   "read_only_depends_on": "eval: [\"Reject\", \"Approved\",\"SKU Approved\",\"SKU Rejected\",\"Identifying Competitor Product\",\"Checking Requirement\",\"Finalizing Order Quantity\",\"Negotiating Price\"].includes(doc.status)"
   },
   {
    "default": "0",
    "fieldname": "advance_payment",
    "fieldtype": "Check",
-   "label": "Advance Payment"
+   "label": "Advance Payment",
+   "read_only_depends_on": "eval: [\"Reject\", \"Approved\",\"SKU Approved\",\"SKU Rejected\",\"Identifying Competitor Product\",\"Checking Requirement\",\"Finalizing Order Quantity\",\"Negotiating Price\"].includes(doc.status)"
   },
   {
    "fieldname": "priority",
    "fieldtype": "Select",
    "label": "Priority",
-   "options": "High\nMedium\nLow"
+   "options": "High\nMedium\nLow",
+   "read_only_depends_on": "eval: [\"Reject\", \"Approved\",\"SKU Approved\",\"SKU Rejected\",\"Identifying Competitor Product\",\"Checking Requirement\",\"Finalizing Order Quantity\",\"Negotiating Price\"].includes(doc.status)"
   },
   {
    "fieldname": "section_break_9",
@@ -78,27 +85,30 @@
    "fieldname": "order_items",
    "fieldtype": "Table",
    "label": "Order Items",
-   "options": "Order Item"
+   "options": "Order Item",
+   "read_only_depends_on": "eval: [\"Reject\", \"Approved\",\"SKU Approved\",\"SKU Rejected\",\"Identifying Competitor Product\",\"Checking Requirement\",\"Finalizing Order Quantity\",\"Negotiating Price\"].includes(doc.status)"
   },
   {
    "depends_on": "eval: doc.existing_supplier",
    "fieldname": "supplier_master",
    "fieldtype": "Link",
    "label": "Supplier",
-   "options": "Supplier"
+   "options": "Supplier",
+   "read_only_depends_on": "eval: [\"Reject\", \"Approved\",\"SKU Approved\",\"SKU Rejected\",\"Identifying Competitor Product\",\"Checking Requirement\",\"Finalizing Order Quantity\",\"Negotiating Price\"].includes(doc.status)"
   },
   {
    "depends_on": "eval: !doc.existing_supplier",
    "fieldname": "supplier",
    "fieldtype": "Data",
-   "label": "Supplier"
+   "label": "Supplier",
+   "read_only_depends_on": "eval: [\"Reject\", \"Approved\",\"SKU Approved\",\"SKU Rejected\",\"Identifying Competitor Product\",\"Checking Requirement\",\"Finalizing Order Quantity\",\"Negotiating Price\"].includes(doc.status)"
   },
   {
    "fieldname": "requirement",
    "fieldtype": "Link",
    "label": "Requirement",
    "options": "Requirement",
-   "read_only_depends_on": "eval: doc.reorder"
+   "read_only_depends_on": "eval: [\"Reject\", \"Approved\",\"SKU Approved\",\"SKU Rejected\",\"Identifying Competitor Product\",\"Checking Requirement\",\"Finalizing Order Quantity\",\"Negotiating Price\"].includes(doc.status)"
   },
   {
    "default": "OGCC / YY-",
@@ -140,33 +150,35 @@
    "fieldtype": "Select",
    "hidden": 1,
    "label": "Status",
-   "options": "Identifying Competitor Product\nChecking Requirement\nFinalizing Order Quantity\nNegotiating Price\nPending\nNew SKU Approved\nNew SKU Rejected"
+   "options": "Identifying Competitor Product\nChecking Requirement\nFinalizing Order Quantity\nNegotiating Price\nPending\nSKU Approved\nSKU Rejected\nApproved\nRejected"
   },
   {
-   "default": "0",
+   "fieldname": "create_items",
+   "fieldtype": "Button",
+   "label": "Create Items"
+  },
+  {
    "fieldname": "with_sku",
    "fieldtype": "Int",
    "hidden": 1,
    "label": "With Sku"
   },
   {
-   "default": "0",
-   "depends_on": "eval: doc.with_sku > 0",
-   "fieldname": "approved_new_sku",
-   "fieldtype": "Check",
-   "label": "Approved New SKU",
-   "read_only": 1
+   "depends_on": "eval: doc.status == \"SKU Rejected\"",
+   "fieldname": "sku_rejection_note",
+   "fieldtype": "Small Text",
+   "label": "SKU Rejection Note"
   },
   {
-   "fieldname": "create_items",
-   "fieldtype": "Button",
-   "label": "Create Items"
+   "depends_on": "eval: doc.status == \"Rejected\"",
+   "fieldname": "order_rejection_note",
+   "fieldtype": "Small Text",
+   "label": "Order Rejection Note"
   }
  ],
  "index_web_pages_for_search": 1,
- "is_submittable": 1,
  "links": [],
- "modified": "2021-08-08 13:32:14.748967",
+ "modified": "2021-08-08 16:46:45.612823",
  "modified_by": "Administrator",
  "module": "Grand",
  "name": "Order",

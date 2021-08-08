@@ -4,13 +4,13 @@ frappe.listview_settings['Order'] = {
 		if (["Identifying Competitor Product",
                 "Checking Requirement",
                 "Finalizing Order Quantity",
-                "Negotiating Price"].includes(doc.status)) {
+                "Negotiating Price", "Pending"].includes(doc.status)) {
 			// Closed
 			return [__(doc.status), "orange", "status,=," + doc.status];
-		} else if (["Rejected"].includes(doc.status)) {
+		} else if (["SKU Rejected", "Rejected"].includes(doc.status)) {
 			// Closed
 			return [__(doc.status), "red", "status,=," + doc.status];
-		}else if (["Approved"].includes(doc.status)) {
+		}else if (["SKU Approved", "Approved"].includes(doc.status)) {
 			// Closed
 			return [__(doc.status), "green", "status,=," + doc.status];
 		}

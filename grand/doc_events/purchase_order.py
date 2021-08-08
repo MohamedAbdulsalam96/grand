@@ -18,3 +18,4 @@ def get_order_tracking_items(doc):
             "rate": i.rate,
             "amount": i.amount,
         })
+    return items
