@@ -1,0 +1,110 @@
+{
+ "actions": [],
+ "creation": "2021-08-05 23:49:28.701524",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "supplier",
+  "supplier_name",
+  "purchase_order_ref",
+  "column_break_4",
+  "eta",
+  "etd",
+  "shipment_no",
+  "section_break_8",
+  "order_tracking_location",
+  "order_tracking_items",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "eta",
+   "fieldtype": "Date",
+   "label": "ETA"
+  },
+  {
+   "fieldname": "etd",
+   "fieldtype": "Date",
+   "label": "ETD"
+  },
+  {
+   "fieldname": "shipment_no",
+   "fieldtype": "Data",
+   "label": "Shipment No"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Order Tracking",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "supplier",
+   "fieldtype": "Link",
+   "label": "Supplier",
+   "options": "Supplier"
+  },
+  {
+   "fetch_from": "supplier.supplier_name",
+   "fieldname": "supplier_name",
+   "fieldtype": "Data",
+   "label": "Supplier Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "purchase_order_ref",
+   "fieldtype": "Link",
+   "label": "Purchase Order Ref",
+   "options": "Purchase Order"
+  },
+  {
+   "fieldname": "section_break_8",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "order_tracking_location",
+   "fieldtype": "Table",
+   "label": "Order Tracking Location",
+   "options": "Order Tracking Location"
+  },
+  {
+   "fieldname": "order_tracking_items",
+   "fieldtype": "Table",
+   "label": "Order Tracking Items",
+   "options": "Order Tracking Item"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2021-08-06 22:24:41.165131",
+ "modified_by": "Administrator",
+ "module": "Grand",
+ "name": "Order Tracking",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

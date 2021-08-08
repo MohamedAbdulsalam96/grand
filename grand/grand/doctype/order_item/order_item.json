@@ -1,0 +1,85 @@
+{
+ "actions": [],
+ "creation": "2021-08-03 23:36:46.501382",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "item_name_master",
+  "item_name",
+  "item_description",
+  "moq",
+  "price",
+  "new_sku",
+  "item"
+ ],
+ "fields": [
+  {
+   "columns": 2,
+   "fieldname": "item_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Item From Requirement"
+  },
+  {
+   "columns": 3,
+   "fetch_from": "item_name_master.description",
+   "fetch_if_empty": 1,
+   "fieldname": "item_description",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Item Description"
+  },
+  {
+   "columns": 1,
+   "default": "0",
+   "fieldname": "moq",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "MOQ"
+  },
+  {
+   "columns": 1,
+   "default": "0",
+   "fieldname": "price",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Price"
+  },
+  {
+   "columns": 1,
+   "default": "0",
+   "fieldname": "new_sku",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "New SKU"
+  },
+  {
+   "columns": 2,
+   "fieldname": "item_name_master",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Item For Reorder",
+   "options": "Item"
+  },
+  {
+   "fieldname": "item",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Item",
+   "options": "Item"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2021-08-05 23:26:29.823679",
+ "modified_by": "Administrator",
+ "module": "Grand",
+ "name": "Order Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

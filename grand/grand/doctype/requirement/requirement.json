@@ -1,0 +1,110 @@
+{
+ "actions": [],
+ "autoname": "naming_series:",
+ "creation": "2021-08-03 23:29:02.702540",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "status",
+  "source_country",
+  "visibility",
+  "column_break_3",
+  "date_of_requirement",
+  "priority",
+  "section_break_6",
+  "requirement_items",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "source_country",
+   "fieldtype": "Link",
+   "label": "Source Country",
+   "options": "Country"
+  },
+  {
+   "fieldname": "visibility",
+   "fieldtype": "Link",
+   "label": "Visibility",
+   "options": "Country"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Today",
+   "fieldname": "date_of_requirement",
+   "fieldtype": "Date",
+   "label": "Date of Requirement"
+  },
+  {
+   "fieldname": "priority",
+   "fieldtype": "Select",
+   "label": "Priority",
+   "options": "High\nMedium\nLow"
+  },
+  {
+   "fieldname": "section_break_6",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "requirement_items",
+   "fieldtype": "Table",
+   "label": "Requirement Items",
+   "options": "Requirement Item"
+  },
+  {
+   "default": "Identifying Supplier",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Status",
+   "options": "\nIdentifying Supplier\nChecking Quality\nWaiting for Quote\nNegotiating Price & MOQ\nQuotation Sent",
+   "read_only": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Requirement",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "default": "RGCC / YY-",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "RGCC / YY-"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2021-08-07 18:27:55.087060",
+ "modified_by": "Administrator",
+ "module": "Grand",
+ "name": "Requirement",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

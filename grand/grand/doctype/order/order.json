@@ -1,0 +1,191 @@
+{
+ "actions": [],
+ "autoname": "naming_series:",
+ "creation": "2021-08-03 23:35:24.364985",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "status",
+  "naming_series",
+  "reorder",
+  "requirement",
+  "existing_supplier",
+  "supplier_master",
+  "supplier",
+  "supplier_name",
+  "create_supplier",
+  "column_break_5",
+  "approved_new_sku",
+  "date_of_requirement",
+  "advance_payment",
+  "priority",
+  "section_break_9",
+  "order_items",
+  "create_items",
+  "more_information_section",
+  "purchase_order",
+  "with_sku",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "default": "0",
+   "fieldname": "existing_supplier",
+   "fieldtype": "Check",
+   "label": "Existing Supplier"
+  },
+  {
+   "default": "0",
+   "fieldname": "reorder",
+   "fieldtype": "Check",
+   "label": "Reorder"
+  },
+  {
+   "fetch_from": "supplier_master.supplier_name",
+   "fetch_if_empty": 1,
+   "fieldname": "supplier_name",
+   "fieldtype": "Data",
+   "label": "Supplier Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "date_of_requirement",
+   "fieldtype": "Date",
+   "label": "Date of Requirement"
+  },
+  {
+   "default": "0",
+   "fieldname": "advance_payment",
+   "fieldtype": "Check",
+   "label": "Advance Payment"
+  },
+  {
+   "fieldname": "priority",
+   "fieldtype": "Select",
+   "label": "Priority",
+   "options": "High\nMedium\nLow"
+  },
+  {
+   "fieldname": "section_break_9",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "order_items",
+   "fieldtype": "Table",
+   "label": "Order Items",
+   "options": "Order Item"
+  },
+  {
+   "depends_on": "eval: doc.existing_supplier",
+   "fieldname": "supplier_master",
+   "fieldtype": "Link",
+   "label": "Supplier",
+   "options": "Supplier"
+  },
+  {
+   "depends_on": "eval: !doc.existing_supplier",
+   "fieldname": "supplier",
+   "fieldtype": "Data",
+   "label": "Supplier"
+  },
+  {
+   "fieldname": "requirement",
+   "fieldtype": "Link",
+   "label": "Requirement",
+   "options": "Requirement",
+   "read_only_depends_on": "eval: doc.reorder"
+  },
+  {
+   "default": "OGCC / YY-",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "OGCC / YY-"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Order",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval: !doc.existing_supplier",
+   "fieldname": "create_supplier",
+   "fieldtype": "Button",
+   "label": "Create Suppiier"
+  },
+  {
+   "fieldname": "more_information_section",
+   "fieldtype": "Section Break",
+   "label": "More Information"
+  },
+  {
+   "fieldname": "purchase_order",
+   "fieldtype": "Link",
+   "label": "Purchase Order",
+   "options": "Purchase Order",
+   "read_only": 1
+  },
+  {
+   "default": "Pending",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Status",
+   "options": "Identifying Competitor Product\nChecking Requirement\nFinalizing Order Quantity\nNegotiating Price\nPending\nNew SKU Approved\nNew SKU Rejected"
+  },
+  {
+   "default": "0",
+   "fieldname": "with_sku",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "With Sku"
+  },
+  {
+   "default": "0",
+   "depends_on": "eval: doc.with_sku > 0",
+   "fieldname": "approved_new_sku",
+   "fieldtype": "Check",
+   "label": "Approved New SKU",
+   "read_only": 1
+  },
+  {
+   "fieldname": "create_items",
+   "fieldtype": "Button",
+   "label": "Create Items"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2021-08-08 13:32:14.748967",
+ "modified_by": "Administrator",
+ "module": "Grand",
+ "name": "Order",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
