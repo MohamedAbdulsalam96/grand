@@ -49,6 +49,7 @@
    "fetch_if_empty": 1,
    "fieldname": "supplier_name",
    "fieldtype": "Data",
+   "hidden": 1,
    "label": "Supplier Name",
    "read_only": 1,
    "read_only_depends_on": "eval: [\"Rejected\", \"Approved\",\"SKU Approved\",\"SKU Rejected\",\"Identifying Competitor Product\",\"Checking Requirement\",\"Finalizing Order Quantity\",\"Negotiating Price\"].includes(doc.status)"
@@ -109,18 +110,20 @@
    "read_only_depends_on": "eval: [\"Rejected\", \"Approved\",\"SKU Approved\",\"SKU Rejected\",\"Identifying Competitor Product\",\"Checking Requirement\",\"Finalizing Order Quantity\",\"Negotiating Price\"].includes(doc.status)"
   },
   {
+   "depends_on": "eval: !doc.reorder",
    "fieldname": "requirement",
    "fieldtype": "Link",
    "label": "Requirement",
+   "mandatory_depends_on": "eval: !doc.reorder",
    "options": "Requirement",
    "read_only_depends_on": "eval: [\"Rejected\", \"Approved\",\"SKU Approved\",\"SKU Rejected\",\"Identifying Competitor Product\",\"Checking Requirement\",\"Finalizing Order Quantity\",\"Negotiating Price\"].includes(doc.status)"
   },
   {
-   "default": "OGCC / .YYYY.-",
+   "default": "OGCC / .YY.-",
    "fieldname": "naming_series",
    "fieldtype": "Select",
    "label": "Series",
-   "options": "OGCC / .YYYY.-"
+   "options": "OGCC / .YY.-"
   },
   {
    "fieldname": "amended_from",
@@ -183,7 +186,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-08-10 10:05:52.955301",
+ "modified": "2021-08-10 21:54:15.689151",
  "modified_by": "Administrator",
  "module": "Grand",
  "name": "Order",

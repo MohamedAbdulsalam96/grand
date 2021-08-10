@@ -77,11 +77,11 @@
    "read_only": 1
   },
   {
-   "default": "RGCC / .YYYY.-",
+   "default": "RGCC / .YY.-",
    "fieldname": "naming_series",
    "fieldtype": "Select",
    "label": "Series",
-   "options": "RGCC / .YYYY.-"
+   "options": "RGCC / .YY.-"
   },
   {
    "fieldname": "section_break_8",
@@ -98,7 +98,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-08-10 20:18:11.365137",
+ "modified": "2021-08-10 21:51:04.907073",
  "modified_by": "Administrator",
  "module": "Grand",
  "name": "Requirement",

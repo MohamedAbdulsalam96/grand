@@ -73,14 +73,14 @@ frappe.ui.form.on('Order', {
             if(!cur_frm.doc.docstatus && !cur_frm.is_new() && cur_frm.doc.status === "Pending" && cur_frm.doc.with_sku < 1){
                 var button1 = cur_frm.add_custom_button(__("Identifying Competitor Product"), () => {
                     change_status(cur_frm,"Identifying Competitor Product")
-                });
+                }).addClass("btn-primary").css({'color':'white','font-weight': 'bold'});
             } else if(cur_frm.doc.status === "SKU Approved"){
                 cur_frm.page.clear_actions_menu()
                 cur_frm.disable_save()
 
                  var button1 = cur_frm.add_custom_button(__("Identifying Competitor Product"), () => {
                     change_status(cur_frm,"Identifying Competitor Product")
-                });
+                }).addClass("btn-primary").css({'color':'white','font-weight': 'bold'});
             } else if(cur_frm.doc.status === "Approved" && !existing_po){
                  cur_frm.page.clear_actions_menu()
                 cur_frm.disable_save()
@@ -97,7 +97,7 @@ frappe.ui.form.on('Order', {
                                     frappe.set_route("Form", "Purchase Order", r.message);
                                 }
                             })
-                        });
+                        }).addClass("btn-primary").css({'color':'white','font-weight': 'bold'});
 
             } else if(cur_frm.doc.status === "Approved" && existing_po){
                  cur_frm.page.clear_actions_menu()
@@ -118,21 +118,21 @@ frappe.ui.form.on('Order', {
                 cur_frm.disable_save()
                 var button1 = cur_frm.add_custom_button(__("Checking Requirement"), () => {
                     change_status(cur_frm,"Checking Requirement")
-                });
+                }).addClass("btn-primary").css({'color':'white','font-weight': 'bold'});
             } else  if( cur_frm.doc.status === "Checking Requirement"){
 
                 cur_frm.page.clear_actions_menu()
                 cur_frm.disable_save()
                 var button2 = cur_frm.add_custom_button(__("Finalizing Order Quantity"), () => {
                         change_status(cur_frm,"Finalizing Order Quantity")
-                });
+                }).addClass("btn-primary").css({'color':'white','font-weight': 'bold'});
             } else  if(cur_frm.doc.status === "Finalizing Order Quantity"){
                 cur_frm.page.clear_actions_menu()
                 cur_frm.disable_save()
 
                 var button3 = cur_frm.add_custom_button(__("Negotiating Price"), () => {
                     change_status(cur_frm,"Negotiating Price")
-                });
+                }).addClass("btn-primary").css({'color':'white','font-weight': 'bold'});
 
             } else if (cur_frm.doc.status === "Negotiating Price"){
                 cur_frm.page.clear_actions_menu()
@@ -162,7 +162,7 @@ frappe.ui.form.on('Order', {
                         cur_frm.reload_doc()
                     }
                 })
-            });
+            }).addClass("btn-primary").css({'color':'white','font-weight': 'bold'});
         }
     },
 	reorder: function(frm) {

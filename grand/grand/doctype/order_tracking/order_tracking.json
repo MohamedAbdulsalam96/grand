@@ -86,12 +86,12 @@
    "options": "Order Tracking Item"
   },
   {
-   "default": "OTGCC / .YYYY.-",
+   "default": "OTGCC / .YY.-",
    "fieldname": "naming_series",
    "fieldtype": "Select",
    "hidden": 1,
    "label": "Series",
-   "options": "OTGCC / .YYYY.-"
+   "options": "OTGCC / .YY.-"
   },
   {
    "default": "Waiting",
@@ -105,7 +105,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-08-10 10:06:08.434123",
+ "modified": "2021-08-10 21:52:26.570307",
  "modified_by": "Administrator",
  "module": "Grand",
  "name": "Order Tracking",
