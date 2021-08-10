@@ -171,3 +171,18 @@ user_data_fields = [
 # 	"grand.auth.validate"
 # ]
 
+fixtures = [
+    {
+        "doctype": "Custom Field",
+        "filters": [
+            [
+                "name",
+                "in",
+                [
+                    "Purchase Order-order",
+                    "Payment Entry-order",
+				]
+			]
+		]
+	}
+]
