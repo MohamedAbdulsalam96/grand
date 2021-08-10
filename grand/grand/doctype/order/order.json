@@ -19,6 +19,8 @@
   "date_of_requirement",
   "advance_payment",
   "priority",
+  "section_break_14",
+  "order_status",
   "section_break_9",
   "order_items",
   "create_items",
@@ -182,11 +184,22 @@
    "fieldname": "order_rejection_note",
    "fieldtype": "Small Text",
    "label": "Order Rejection Note"
+  },
+  {
+   "fieldname": "section_break_14",
+   "fieldtype": "Section Break"
+  },
+  {
+   "depends_on": "eval: doc.status != \"Pending\"",
+   "fieldname": "order_status",
+   "fieldtype": "Table",
+   "label": "Order Status",
+   "options": "Order Status"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-08-10 21:54:15.689151",
+ "modified": "2021-08-10 22:00:22.510652",
  "modified_by": "Administrator",
  "module": "Grand",
  "name": "Order",
