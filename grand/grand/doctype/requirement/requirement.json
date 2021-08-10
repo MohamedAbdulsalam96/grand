@@ -13,6 +13,8 @@
   "column_break_3",
   "date_of_requirement",
   "priority",
+  "section_break_8",
+  "requirement_status",
   "section_break_6",
   "requirement_items",
   "amended_from"
@@ -75,17 +77,27 @@
    "read_only": 1
   },
   {
-   "default": "RGCC / YY-",
+   "default": "RGCC / .YYYY.-",
    "fieldname": "naming_series",
    "fieldtype": "Select",
    "label": "Series",
-   "options": "RGCC / YY-"
+   "options": "RGCC / .YYYY.-"
+  },
+  {
+   "fieldname": "section_break_8",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "requirement_status",
+   "fieldtype": "Table",
+   "label": "Requirement Status",
+   "options": "Requirement Status"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-08-07 18:27:55.087060",
+ "modified": "2021-08-10 10:04:12.449846",
  "modified_by": "Administrator",
  "module": "Grand",
  "name": "Requirement",

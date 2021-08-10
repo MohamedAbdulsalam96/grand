@@ -58,10 +58,13 @@
    "fieldtype": "Column Break"
   },
   {
+   "default": "Today",
    "fieldname": "date_of_requirement",
    "fieldtype": "Date",
+   "in_list_view": 1,
    "label": "Date of Requirement",
-   "read_only_depends_on": "eval: [\"Rejected\", \"Approved\",\"SKU Approved\",\"SKU Rejected\",\"Identifying Competitor Product\",\"Checking Requirement\",\"Finalizing Order Quantity\",\"Negotiating Price\"].includes(doc.status)"
+   "read_only_depends_on": "eval: [\"Rejected\", \"Approved\",\"SKU Approved\",\"SKU Rejected\",\"Identifying Competitor Product\",\"Checking Requirement\",\"Finalizing Order Quantity\",\"Negotiating Price\"].includes(doc.status)",
+   "reqd": 1
   },
   {
    "default": "0",
@@ -93,6 +96,7 @@
    "fieldname": "supplier_master",
    "fieldtype": "Link",
    "label": "Supplier",
+   "mandatory_depends_on": "eval: doc.existing_supplier",
    "options": "Supplier",
    "read_only_depends_on": "eval: [\"Rejected\", \"Approved\",\"SKU Approved\",\"SKU Rejected\",\"Identifying Competitor Product\",\"Checking Requirement\",\"Finalizing Order Quantity\",\"Negotiating Price\"].includes(doc.status)"
   },
@@ -101,6 +105,7 @@
    "fieldname": "supplier",
    "fieldtype": "Data",
    "label": "Supplier",
+   "mandatory_depends_on": "eval: !doc.existing_supplier",
    "read_only_depends_on": "eval: [\"Rejected\", \"Approved\",\"SKU Approved\",\"SKU Rejected\",\"Identifying Competitor Product\",\"Checking Requirement\",\"Finalizing Order Quantity\",\"Negotiating Price\"].includes(doc.status)"
   },
   {
@@ -111,11 +116,11 @@
    "read_only_depends_on": "eval: [\"Rejected\", \"Approved\",\"SKU Approved\",\"SKU Rejected\",\"Identifying Competitor Product\",\"Checking Requirement\",\"Finalizing Order Quantity\",\"Negotiating Price\"].includes(doc.status)"
   },
   {
-   "default": "OGCC / YY-",
+   "default": "OGCC / .YYYY.-",
    "fieldname": "naming_series",
    "fieldtype": "Select",
    "label": "Series",
-   "options": "OGCC / YY-"
+   "options": "OGCC / .YYYY.-"
   },
   {
    "fieldname": "amended_from",
@@ -178,7 +183,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-08-08 21:16:29.033972",
+ "modified": "2021-08-10 10:05:52.955301",
  "modified_by": "Administrator",
  "module": "Grand",
  "name": "Order",

@@ -2,6 +2,11 @@
 // For license information, please see license.txt
 var existing_order = false
 frappe.ui.form.on('Requirement', {
+    onload_post_render: function(){
+        if(!cur_frm.is_new()) {
+            document.querySelectorAll("[data-doctype='Order']")[2].style.display = "none";
+        }
+    },
 	refresh: function(frm) {
 	     cur_frm.call({
             doc: cur_frm.doc,

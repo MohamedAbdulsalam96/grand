@@ -13,7 +13,7 @@ class Order(Document):
 
     @frappe.whitelist()
     def change_status(self, status):
-        frappe.db.sql(""" UPDATE `tabOrder` SET status=%s, workflow_state=%s WHERE name=%s """, (status, status, self.name))
+        frappe.db.sql(""" UPDATE `tabOrder` SET status=%s WHERE name=%s """, (status, self.name))
         frappe.db.commit()
     @frappe.whitelist()
     def create_items(self):
@@ -46,6 +46,7 @@ class Order(Document):
             "doctype": "Purchase Order",
             "supplier": self.supplier_master if self.existing_supplier else self.supplier,
             "schedule_date": self.date_of_requirement,
+            "order": self.name,
             "items": self.get_po_items()
         }
         new_po = frappe.get_doc(obj).insert()

@@ -6,9 +6,26 @@ from frappe.model.document import Document
 
 class Requirement(Document):
 	@frappe.whitelist()
+	def on_submit(self):
+		self.add_status("Identifying Supplier")
+	@frappe.whitelist()
 	def change_status(self, status):
 		frappe.db.sql(""" UPDATE `tabRequirement` SET status=%s WHERE name=%s """, (status, self.name))
 		frappe.db.commit()
+		self.add_status(status)
+
+	@frappe.whitelist()
+	def add_status(self,status):
+		status_length = frappe.db.sql(""" SELECT COUNT(*) as count FROM `tabRequirement Status` WHERE parent=%s""", self.name, as_dict=1)
+		obj ={
+			"doctype": "Requirement Status",
+			"status": status,
+			"parent": self.name,
+			"parenttype": "Requirement",
+			"parentfield": "requirement_status",
+			"idx": status_length[0].count + 1
+		}
+		frappe.get_doc(obj).insert()
 
 	@frappe.whitelist()
 	def create_order(self):

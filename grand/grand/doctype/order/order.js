@@ -19,6 +19,12 @@ function change_status(cur_frm,status) {
 }
 var existing_po = false
 frappe.ui.form.on('Order', {
+    onload_post_render: function(){
+        if(!cur_frm.is_new()) {
+            document.querySelectorAll("[data-doctype='Purchase Order']")[2].style.display = "none";
+            document.querySelectorAll("[data-doctype='Payment Entry']")[2].style.display = "none";
+        }
+    },
     onload: function(){
         var item_name_master = frappe.meta.get_docfield("Order Item", "item_name_master", cur_frm.doc.name);
         var item_name = frappe.meta.get_docfield("Order Item", "item_name", cur_frm.doc.name);
