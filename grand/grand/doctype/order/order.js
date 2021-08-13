@@ -196,8 +196,6 @@ frappe.ui.form.on('Order', {
 
     },
     create_supplier: function(frm) {
-	    cur_frm.clear_table("order_items")
-        cur_frm.refresh_field("order_items")
 	    if(cur_frm.doc.supplier){
 	       cur_frm.call({
                 doc: cur_frm.doc,
@@ -208,6 +206,7 @@ frappe.ui.form.on('Order', {
                 async: false,
                 callback: (r) => {
                     if(r.message){
+                        cur_frm.reload_doc()
                          frappe.show_alert({
                             message:__('Supplier Created'),
                             indicator:'green'
@@ -230,6 +229,8 @@ frappe.ui.form.on('Order', {
                 async: false,
                 callback: (r) => {
                     if(r.message){
+                                                cur_frm.reload_doc()
+
                          frappe.show_alert({
                             message:__('Items Created'),
                             indicator:'green'

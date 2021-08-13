@@ -50,6 +50,8 @@ class Order(Document):
                 except:
                     frappe.log_error(frappe.get_traceback(), "Item Creation Failed")
                     return False
+        frappe.db.sql(""" UPDATE `tabOrder` SET created_items=1 WHERE name=%s """, self.name)
+        frappe.db.commit()
         return True
     @frappe.whitelist()
     def check_po(self):
@@ -59,9 +61,11 @@ class Order(Document):
         return po[0].count > 0
     @frappe.whitelist()
     def generate_po(self):
+        if not self.existing_supplier and not self.supplier_id:
+            frappe.throw("Please create the supplier through Create Supplier Button")
         obj = {
             "doctype": "Purchase Order",
-            "supplier": self.supplier_master if self.existing_supplier else self.supplier,
+            "supplier": self.supplier_master if self.existing_supplier else self.supplier_id,
             "schedule_date": self.date_of_requirement,
             "order": self.name,
             "items": self.get_po_items()
@@ -117,7 +121,9 @@ class Order(Document):
             "supplier_group": "All Supplier Groups",
         }
         try:
-            frappe.get_doc(obj).insert()
+            supplier = frappe.get_doc(obj).insert()
+            frappe.db.sql(""" UPDATE `tabOrder` SET supplier_id=%s WHERE name=%s """,(supplier.name,self.name))
+            frappe.db.commit()
             return True
         except:
             frappe.log_error(frappe.get_traceback(), "Supplier Creation Failed")
