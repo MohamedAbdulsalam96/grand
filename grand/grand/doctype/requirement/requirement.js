@@ -34,7 +34,7 @@ frappe.ui.form.on('Requirement', {
                         cur_frm.reload_doc()
                     }
                 })
-            }).addClass("btn-primary").css({'color':'white','font-weight': 'bold'});
+            }.css({'color':'white','font-weight': 'bold', 'background-color': 'blue'});
         } else  if(cur_frm.doc.docstatus && cur_frm.doc.status === "Checking Quality"){
 	        cur_frm.add_custom_button(__("Waiting for Quote"), () => {
                 cur_frm.call({
@@ -50,7 +50,7 @@ frappe.ui.form.on('Requirement', {
                         cur_frm.reload_doc()
                     }
                 })
-            }).addClass("btn-primary").css({'color':'white','font-weight': 'bold'});
+            }).css({'color':'white','font-weight': 'bold', 'background-color': 'blue'});
         } else  if(cur_frm.doc.docstatus && cur_frm.doc.status === "Waiting for Quote"){
 	        cur_frm.add_custom_button(__("Negotiating Price & MOQ"), () => {
                 cur_frm.call({
@@ -66,7 +66,7 @@ frappe.ui.form.on('Requirement', {
                         cur_frm.reload_doc()
                     }
                 })
-            }).addClass("btn-primary").css({'color':'white','font-weight': 'bold'});
+            }).css({'color':'white','font-weight': 'bold', 'background-color': 'blue'});
         } else  if(cur_frm.doc.docstatus && cur_frm.doc.status === "Negotiating Price & MOQ"){
 	        cur_frm.add_custom_button(__("Quotation Sent"), () => {
                 cur_frm.call({
@@ -82,7 +82,7 @@ frappe.ui.form.on('Requirement', {
                         cur_frm.reload_doc()
                     }
                 })
-            }).addClass("btn-primary").css({'color':'white','font-weight': 'bold'});
+            }).css({'color':'white','font-weight': 'bold', 'background-color': 'blue'});
         } else  if(cur_frm.doc.docstatus && cur_frm.doc.status === "Quotation Sent" && !existing_order){
 	        cur_frm.add_custom_button(__("Create Order"), () => {
                 cur_frm.call({
@@ -96,7 +96,7 @@ frappe.ui.form.on('Requirement', {
                         frappe.set_route("Form", "Order", r.message);
                     }
                 })
-            }).addClass("btn-primary").css({'color':'white','font-weight': 'bold'});
+            }).css({'color':'white','font-weight': 'bold', 'background-color': 'blue'});
         }
 
 	}
