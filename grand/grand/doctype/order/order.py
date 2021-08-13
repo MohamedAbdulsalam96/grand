@@ -82,7 +82,7 @@ class Order(Document):
 
             if frappe.db.exists('Item',i.item):
                 items.append({
-                    "item_code": item_code,
+                    "item_code": i.item,
                     "item_name": i.item_description,
                     "qty": i.moq,
                     "rate": i.price,
