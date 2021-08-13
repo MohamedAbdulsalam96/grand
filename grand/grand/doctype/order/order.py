@@ -40,6 +40,7 @@ class Order(Document):
                 obj = {
                     "doctype": "Item",
                     "item_code": i.item_name,
+                    "item_name": i.item_name,
                     "description": i.item_description,
                     "item_group": "All Item Groups"
                 }
