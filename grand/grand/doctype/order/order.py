@@ -75,7 +75,7 @@ class Order(Document):
         for i in self.order_items:
             item_code = i.item_name if not self.reorder else i.item_name_master
 
-            if frappe.db.exists('Item',item_code):
+            if frappe.db.exists('Item',i.item):
                 items.append({
                     "item_code": item_code,
                     "item_name": i.item_description,

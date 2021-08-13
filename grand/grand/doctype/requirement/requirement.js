@@ -34,7 +34,7 @@ frappe.ui.form.on('Requirement', {
                         cur_frm.reload_doc()
                     }
                 })
-            }.css({'color':'white','font-weight': 'bold', 'background-color': 'blue'});
+            }).css({'color':'white','font-weight': 'bold', 'background-color': 'blue'});
         } else  if(cur_frm.doc.docstatus && cur_frm.doc.status === "Checking Quality"){
 	        cur_frm.add_custom_button(__("Waiting for Quote"), () => {
                 cur_frm.call({
