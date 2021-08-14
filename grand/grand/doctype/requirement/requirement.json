@@ -56,7 +56,8 @@
    "fieldname": "requirement_items",
    "fieldtype": "Table",
    "label": "Requirement Items",
-   "options": "Requirement Item"
+   "options": "Requirement Item",
+   "reqd": 1
   },
   {
    "default": "Identifying Supplier",
@@ -98,7 +99,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-08-10 21:51:04.907073",
+ "modified": "2021-08-14 12:04:28.388758",
  "modified_by": "Administrator",
  "module": "Grand",
  "name": "Requirement",
