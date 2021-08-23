@@ -10,12 +10,9 @@
   "naming_series",
   "reorder",
   "requirement",
-  "existing_supplier",
+  "country",
   "supplier_master",
-  "supplier_id",
-  "supplier",
   "supplier_name",
-  "create_supplier",
   "column_break_5",
   "date_of_requirement",
   "advance_payment",
@@ -34,13 +31,6 @@
   "amended_from"
  ],
  "fields": [
-  {
-   "default": "0",
-   "fieldname": "existing_supplier",
-   "fieldtype": "Check",
-   "label": "Existing Supplier",
-   "read_only_depends_on": "eval: [\"Rejected\", \"Approved\",\"SKU Approved\",\"SKU Rejected\",\"Identifying Competitor Product\",\"Checking Requirement\",\"Finalizing Order Quantity\",\"Negotiating Price\"].includes(doc.status)"
-  },
   {
    "default": "0",
    "fieldname": "reorder",
@@ -97,21 +87,14 @@
    "read_only_depends_on": "eval: [\"Rejected\", \"Approved\",\"SKU Approved\",\"SKU Rejected\",\"Identifying Competitor Product\",\"Checking Requirement\",\"Finalizing Order Quantity\",\"Negotiating Price\"].includes(doc.status)"
   },
   {
-   "depends_on": "eval: doc.existing_supplier",
+   "fetch_from": "requirement.supplier",
+   "fetch_if_empty": 1,
    "fieldname": "supplier_master",
    "fieldtype": "Link",
    "label": "Supplier",
-   "mandatory_depends_on": "eval: doc.existing_supplier",
    "options": "Supplier",
-   "read_only_depends_on": "eval: [\"Rejected\", \"Approved\",\"SKU Approved\",\"SKU Rejected\",\"Identifying Competitor Product\",\"Checking Requirement\",\"Finalizing Order Quantity\",\"Negotiating Price\"].includes(doc.status)"
-  },
-  {
-   "depends_on": "eval: !doc.existing_supplier",
-   "fieldname": "supplier",
-   "fieldtype": "Data",
-   "label": "Supplier",
-   "mandatory_depends_on": "eval: !doc.existing_supplier",
-   "read_only_depends_on": "eval: [\"Rejected\", \"Approved\",\"SKU Approved\",\"SKU Rejected\",\"Identifying Competitor Product\",\"Checking Requirement\",\"Finalizing Order Quantity\",\"Negotiating Price\"].includes(doc.status)"
+   "read_only_depends_on": "eval: [\"Rejected\", \"Approved\",\"SKU Approved\",\"SKU Rejected\",\"Identifying Competitor Product\",\"Checking Requirement\",\"Finalizing Order Quantity\",\"Negotiating Price\"].includes(doc.status) || !doc.reorder",
+   "reqd": 1
   },
   {
    "depends_on": "eval: !doc.reorder",
@@ -137,12 +120,6 @@
    "options": "Order",
    "print_hide": 1,
    "read_only": 1
-  },
-  {
-   "depends_on": "eval: !doc.existing_supplier && !doc.supplier_id",
-   "fieldname": "create_supplier",
-   "fieldtype": "Button",
-   "label": "Create Suppiier"
   },
   {
    "fieldname": "more_information_section",
@@ -200,23 +177,22 @@
    "options": "Order Status"
   },
   {
-   "fieldname": "supplier_id",
-   "fieldtype": "Link",
-   "hidden": 1,
-   "label": "Supplier iD",
-   "options": "Supplier"
-  },
-  {
    "default": "0",
    "fieldname": "created_items",
    "fieldtype": "Check",
    "hidden": 1,
    "label": "Created Items"
+  },
+  {
+   "fieldname": "country",
+   "fieldtype": "Link",
+   "label": "Country",
+   "options": "Country"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-08-13 19:28:53.564702",
+ "modified": "2021-08-24 01:15:47.837695",
  "modified_by": "Administrator",
  "module": "Grand",
  "name": "Order",

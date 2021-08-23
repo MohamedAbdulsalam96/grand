@@ -11,11 +11,12 @@
  ],
  "fields": [
   {
+   "allow_on_submit": 1,
    "fieldname": "status",
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Status",
-   "options": "\nIdentifying Supplier\nChecking Quality\nWaiting for Quote\nNegotiating Price & MOQ\nQuotation Sent",
+   "options": "\nIdentifying Supplier\nChecking Quality\nWaiting for Quote\nNegotiating Price & MOQ\nQuotation Sent\nApproved\nRejected",
    "read_only": 1
   },
   {
@@ -37,7 +38,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-08-10 11:11:21.485537",
+ "modified": "2021-08-24 01:03:34.039261",
  "modified_by": "Administrator",
  "module": "Grand",
  "name": "Requirement Status",

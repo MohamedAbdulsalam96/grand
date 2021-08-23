@@ -7,6 +7,29 @@ frappe.ui.form.on('Requirement', {
             document.querySelectorAll("[data-doctype='Order']")[2].style.display = "none";
         }
     },
+    create_supplier: function(frm) {
+	    if(cur_frm.doc.supplier){
+	       cur_frm.call({
+                doc: cur_frm.doc,
+                method: 'create_supplier',
+                args: {},
+                freeze: true,
+                freeze_message: "Creating Supplier....",
+                async: false,
+                callback: (r) => {
+                    if(r.message){
+                        cur_frm.reload_doc()
+                         frappe.show_alert({
+                            message:__('Supplier Created'),
+                            indicator:'green'
+                        }, 3);
+                    }
+
+                }
+            })
+        }
+
+    },
 	refresh: function(frm) {
 	     cur_frm.call({
             doc: cur_frm.doc,
@@ -83,17 +106,54 @@ frappe.ui.form.on('Requirement', {
                     }
                 })
             }).css({'color':'white','font-weight': 'bold', 'background-color': 'blue'});
-        } else  if(cur_frm.doc.docstatus && cur_frm.doc.status === "Quotation Sent" && !existing_order){
-	        cur_frm.add_custom_button(__("Create Order"), () => {
+        } else  if(cur_frm.doc.docstatus && cur_frm.doc.status === "Quotation Sent"){
+	        cur_frm.add_custom_button(__("Approve"), () => {
+                cur_frm.call({
+                    doc: cur_frm.doc,
+                    method: 'change_status',
+                    args: {
+                      status: "Approved"
+                    },
+                    freeze: true,
+                    freeze_message: "Changing Status...",
+                    async: false,
+                    callback: (r) => {
+                        cur_frm.reload_doc()
+                    }
+                })
+            }).css({'color':'white','font-weight': 'bold', 'background-color': 'blue'});
+
+	        cur_frm.add_custom_button(__("Reject"), () => {
+                cur_frm.call({
+                    doc: cur_frm.doc,
+                    method: 'change_status',
+                    args: {
+                      status: "Rejected"
+                    },
+                    freeze: true,
+                    freeze_message: "Changing Status...",
+                    async: false,
+                    callback: (r) => {
+                        cur_frm.reload_doc()
+                    }
+                })
+            }).css({'color':'white','font-weight': 'bold', 'background-color': 'red'});
+        }
+        else  if(cur_frm.doc.docstatus && cur_frm.doc.status === "Approved" && !existing_order){
+	        cur_frm.add_custom_button(__("Create Orders"), () => {
                 cur_frm.call({
                     doc: cur_frm.doc,
                     method: 'create_order',
                     args: {},
                     freeze: true,
-                    freeze_message: "Creating Order...",
+                    freeze_message: "Creating Orders...",
                     async: false,
                     callback: (r) => {
-                        frappe.set_route("Form", "Order", r.message);
+                        cur_frm.reload_doc()
+                         frappe.show_alert({
+                            message:__('Orders Created'),
+                            indicator:'green'
+                        }, 3);
                     }
                 })
             }).css({'color':'white','font-weight': 'bold', 'background-color': 'blue'});

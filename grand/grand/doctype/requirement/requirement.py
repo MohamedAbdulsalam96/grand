@@ -6,6 +6,27 @@ from frappe.model.document import Document
 
 class Requirement(Document):
 	@frappe.whitelist()
+	def validate(self):
+		country_moq_fields = ['country_based_moq_1', 'country_based_moq_2', 'country_based_moq_3',
+							  'country_based_moq_4', 'country_based_moq_5']
+		for i in self.requirement_items:
+			total_moq = 0
+			for x in range(0, len(country_moq_fields)):
+				total_moq += i.__dict__[country_moq_fields[x]]
+			if total_moq != i.final_moq:
+				frappe.throw("Total MOQ is not equal to Final MOQ in row " + str(i.idx))
+
+	@frappe.whitelist()
+	def on_update_after_submit(self):
+		country_moq_fields = ['country_based_moq_1', 'country_based_moq_2', 'country_based_moq_3',
+							  'country_based_moq_4', 'country_based_moq_5']
+		for i in self.requirement_items:
+			total_moq = 0
+			for x in range(0, len(country_moq_fields)):
+				total_moq += i.__dict__[country_moq_fields[x]]
+			if total_moq != i.final_moq:
+				frappe.throw("Total MOQ is not equal to Final MOQ in row " + str(i.idx))
+	@frappe.whitelist()
 	def on_submit(self):
 		self.add_status("Identifying Supplier")
 	@frappe.whitelist()
@@ -14,6 +35,21 @@ class Requirement(Document):
 		frappe.db.commit()
 		self.add_status(status)
 
+	@frappe.whitelist()
+	def create_supplier(self):
+		obj = {
+			"doctype": "Supplier",
+			"supplier_name": self.supplier,
+			"supplier_group": "All Supplier Groups",
+		}
+		try:
+			supplier = frappe.get_doc(obj).insert()
+			frappe.db.sql(""" UPDATE `tabRequirement` SET supplier_id=%s WHERE name=%s """, (supplier.name, self.name))
+			frappe.db.commit()
+			return True
+		except:
+			frappe.log_error(frappe.get_traceback(), "Supplier Creation Failed")
+			return False
 	@frappe.whitelist()
 	def add_status(self,status):
 		status_length = frappe.db.sql(""" SELECT COUNT(*) as count FROM `tabRequirement Status` WHERE parent=%s""", self.name, as_dict=1)
@@ -29,23 +65,39 @@ class Requirement(Document):
 
 	@frappe.whitelist()
 	def create_order(self):
-		obj = {
-			"doctype": "Order",
-			"requirement": self.name,
-			"date_of_requirement": self.date_of_requirement,
-			"priority": self.priority,
-			"order_items": self.get_items()
-		}
-		order = frappe.get_doc(obj).insert()
-		return order.name
-	def get_items(self):
-		items = []
+		country_fields = ['country_1','country_2','country_3','country_4','country_5']
+		country_moq_fields = ['country_based_moq_1','country_based_moq_2','country_based_moq_3','country_based_moq_4','country_based_moq_5']
 		for i in self.requirement_items:
-			items.append({
-				"item_name": i.item_name,
-				"item_description": i.item_description
-			})
-		return items
+			for x in range(0,len(country_fields)):
+				existing_order = frappe.db.sql(""" SELECT * FROM `tabOrder` WHERE country=%s and requirement=%s """, (i.__dict__[country_fields[x]],self.name),as_dict=1)
+				if len(existing_order) > 0:
+					order_exist = frappe.get_doc("Order", existing_order[0].name)
+					order_exist.append("order_items",{
+						"item_name": i.item_name,
+						"item_description": i.item_description,
+						"moq": i.__dict__[country_moq_fields[x]],
+					})
+					order_exist.save()
+					print("EXISTING ORDER")
+				else:
+					obj = {
+						"doctype": "Order",
+						"requirement": self.name,
+						"date_of_requirement": self.date_of_requirement,
+						"priority": self.priority,
+						"country": i.__dict__[country_fields[x]],
+						"order_items": [
+							{
+								"item_name": i.item_name,
+								"item_description": i.item_description,
+								"moq": i.__dict__[country_moq_fields[x]],
+							}
+						]
+					}
+					order = frappe.get_doc(obj).insert()
+					print("NEW ORDER")
+					print(order.name)
+
 	@frappe.whitelist()
 	def check_order(self):
 		order = frappe.db.sql(""" SELECT COUNT(*) as count from `tabOrder` WHERE requirement=%s """, self.name, as_dict=1)

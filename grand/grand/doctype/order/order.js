@@ -180,7 +180,7 @@ frappe.ui.form.on('Order', {
     requirement: function(frm) {
 	    cur_frm.clear_table("order_items")
         cur_frm.refresh_field("order_items")
-	    if(cur_frm.doc.requirement){
+	    if(cur_frm.doc.requirement && cur_frm.doc.country){
 	       cur_frm.call({
                 doc: cur_frm.doc,
                 method: 'add_item',
@@ -195,24 +195,19 @@ frappe.ui.form.on('Order', {
         }
 
     },
-    create_supplier: function(frm) {
-	    if(cur_frm.doc.supplier){
+    country: function(frm) {
+	    cur_frm.clear_table("order_items")
+        cur_frm.refresh_field("order_items")
+	    if(cur_frm.doc.requirement && cur_frm.doc.country){
 	       cur_frm.call({
                 doc: cur_frm.doc,
-                method: 'create_supplier',
+                method: 'add_item',
                 args: {},
                 freeze: true,
-                freeze_message: "Creating Supplier....",
+                freeze_message: "Adding Items",
                 async: false,
                 callback: (r) => {
-                    if(r.message){
-                        cur_frm.reload_doc()
-                         frappe.show_alert({
-                            message:__('Supplier Created'),
-                            indicator:'green'
-                        }, 3);
-                    }
-
+                    cur_frm.refresh_field("order_items")
                 }
             })
         }

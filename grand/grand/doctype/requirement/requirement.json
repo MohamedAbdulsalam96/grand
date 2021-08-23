@@ -10,7 +10,11 @@
   "status",
   "source_country",
   "visibility",
+  "supplier",
+  "create_supplier",
+  "supplier_id",
   "column_break_3",
+  "posting_date",
   "date_of_requirement",
   "priority",
   "section_break_8",
@@ -65,7 +69,7 @@
    "fieldtype": "Select",
    "hidden": 1,
    "label": "Status",
-   "options": "\nIdentifying Supplier\nChecking Quality\nWaiting for Quote\nNegotiating Price & MOQ\nQuotation Sent",
+   "options": "\nIdentifying Supplier\nChecking Quality\nWaiting for Quote\nNegotiating Price & MOQ\nQuotation Sent\nApproved\nRejected",
    "read_only": 1
   },
   {
@@ -94,12 +98,38 @@
    "fieldtype": "Table",
    "label": "Requirement Status",
    "options": "Requirement Status"
+  },
+  {
+   "default": "Today",
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Posting Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "supplier",
+   "fieldtype": "Data",
+   "label": "Supplier"
+  },
+  {
+   "depends_on": "eval: doc.supplier && !doc.supplier_id",
+   "fieldname": "create_supplier",
+   "fieldtype": "Button",
+   "label": "Create Supplier"
+  },
+  {
+   "fieldname": "supplier_id",
+   "fieldtype": "Link",
+   "label": "Supplier ID",
+   "options": "Supplier",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-08-14 12:04:28.388758",
+ "modified": "2021-08-24 00:52:56.144119",
  "modified_by": "Administrator",
  "module": "Grand",
  "name": "Requirement",

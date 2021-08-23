@@ -109,11 +109,17 @@ class Order(Document):
     @frappe.whitelist()
     def add_item(self):
         items = frappe.db.sql(""" SELECT * FROM `tabRequirement Item` WHERE parent=%s """, self.requirement, as_dict=1)
+        country_fields = ['country_1', 'country_2', 'country_3', 'country_4', 'country_5']
+        country_moq_fields = ['country_based_moq_1', 'country_based_moq_2', 'country_based_moq_3',
+                              'country_based_moq_4', 'country_based_moq_5']
         for i in items:
-            self.append("order_items",{
-                "item_name": i.item_name,
-                "item_description": i.item_description,
-            })
+            for x in range(0, len(country_fields)):
+                if i[country_fields[x]] == self.country:
+                    self.append("order_items",{
+                        "item_name": i.item_name,
+                        "item_description": i.item_description,
+                        "moq": i[country_moq_fields[x]],
+                    })
     @frappe.whitelist()
     def create_supplier(self):
         obj = {
