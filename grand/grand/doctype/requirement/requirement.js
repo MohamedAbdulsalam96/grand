@@ -159,5 +159,20 @@ frappe.ui.form.on('Requirement', {
             }).css({'color':'white','font-weight': 'bold', 'background-color': 'blue'});
         }
 
-	}
+	},
+    currency: function () {
+        for(var x=0;x<cur_frm.doc.requirement_items.length;x+=1){
+            cur_frm.doc.requirement_items[x].currency = cur_frm.doc.currency
+                    cur_frm.refresh_field("requirement_items")
+
+        }
+    }
 });
+
+cur_frm.cscript.requirement_items_add = function (frm, cdt, cdn) {
+    var d = locals[cdt][cdn]
+    console.log("ADD REQUIREMENT ITEMS")
+    d.currency = cur_frm.doc.currency
+    cur_frm.refresh_field("requirement_items")
+
+}

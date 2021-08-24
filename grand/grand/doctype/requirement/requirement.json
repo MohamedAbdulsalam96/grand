@@ -20,6 +20,7 @@
   "section_break_8",
   "requirement_status",
   "section_break_6",
+  "currency",
   "requirement_items",
   "amended_from"
  ],
@@ -124,12 +125,19 @@
    "label": "Supplier ID",
    "options": "Supplier",
    "read_only": 1
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "label": "Currency",
+   "options": "Currency",
+   "read_only_depends_on": "eval: doc.requirement_items.length == 0"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-08-24 00:52:56.144119",
+ "modified": "2021-08-24 11:54:21.420625",
  "modified_by": "Administrator",
  "module": "Grand",
  "name": "Requirement",

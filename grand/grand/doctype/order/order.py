@@ -75,6 +75,7 @@ class Order(Document):
         frappe.db.sql(""" UPDATE `tabOrder` SET purchase_order=%s WHERE name=%s """,(new_po.name, self.name))
         frappe.db.commit()
         return new_po.name
+
     def get_po_items(self):
         items = []
         for i in self.order_items:

@@ -10,6 +10,7 @@
   "item_group",
   "column_break_4",
   "qty_required",
+  "currency",
   "starting_price",
   "ending_price",
   "final_moq",
@@ -61,7 +62,8 @@
    "fieldname": "starting_price",
    "fieldtype": "Currency",
    "in_list_view": 1,
-   "label": "Starting Price"
+   "label": "Starting Price",
+   "options": "currency"
   },
   {
    "columns": 1,
@@ -69,7 +71,8 @@
    "fieldname": "ending_price",
    "fieldtype": "Currency",
    "in_list_view": 1,
-   "label": "Ending Price"
+   "label": "Ending Price",
+   "options": "currency"
   },
   {
    "allow_on_submit": 1,
@@ -83,7 +86,8 @@
    "depends_on": "eval: parent.status == \"Quotation Sent\" || parent.status == \"Approved\"",
    "fieldname": "final_price",
    "fieldtype": "Currency",
-   "label": "Final Price"
+   "label": "Final Price",
+   "options": "currency"
   },
   {
    "fieldname": "section_break_9",
@@ -161,12 +165,19 @@
   {
    "fieldname": "column_break_4",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "label": "Currency",
+   "options": "Currency",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-08-24 00:46:42.823521",
+ "modified": "2021-08-24 11:48:32.553377",
  "modified_by": "Administrator",
  "module": "Grand",
  "name": "Requirement Item",
