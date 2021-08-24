@@ -17,7 +17,6 @@ function change_status(cur_frm,status) {
     })
 
 }
-var existing_po = false
 frappe.ui.form.on('Order', {
     onload_post_render: function(){
         if(!cur_frm.is_new()) {
@@ -45,17 +44,6 @@ frappe.ui.form.on('Order', {
 
             });
         }
-         cur_frm.call({
-            doc: cur_frm.doc,
-            method: 'check_po',
-            args: {},
-            freeze: true,
-            freeze_message: "Check PO...",
-            async: false,
-            callback: (r) => {
-                existing_po = r.message
-             }
-        })
        cur_frm.set_query('requirement', () => {
             return {
                 filters: [
@@ -81,7 +69,7 @@ frappe.ui.form.on('Order', {
                  var button1 = cur_frm.add_custom_button(__("Identifying Competitor Product"), () => {
                     change_status(cur_frm,"Identifying Competitor Product")
                 }).css({'color':'white','font-weight': 'bold', 'background-color': 'blue'});
-            } else if(cur_frm.doc.status === "Approved" && !existing_po){
+            } else if(cur_frm.doc.status === "Approved" && !cur_frm.doc.purchase_order){
                  cur_frm.page.clear_actions_menu()
                 cur_frm.disable_save()
                       var button4 = cur_frm.add_custom_button(__("Purchase Order"), () => {
@@ -94,15 +82,18 @@ frappe.ui.form.on('Order', {
                                 async: false,
                                 callback: (r) => {
                                     cur_frm.reload_doc()
+                                frappe.show_alert({
+                                    message:__('Purchase Order Created'),
+                                    indicator:'green'
+                                }, 3);
                                     frappe.set_route("Form", "Purchase Order", r.message);
                                 }
                             })
                         }).css({'color':'white','font-weight': 'bold', 'background-color': 'blue'});
 
-            } else if(cur_frm.doc.status === "Approved" && existing_po){
+            } else if(cur_frm.doc.status === "Approved" && cur_frm.doc.purchase_order){
                  cur_frm.page.clear_actions_menu()
                 cur_frm.disable_save()
-
 
             } else if(cur_frm.doc.status === "Rejected"){
                  cur_frm.page.clear_actions_menu()

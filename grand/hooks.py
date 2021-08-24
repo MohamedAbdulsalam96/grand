@@ -179,7 +179,7 @@ fixtures = [
                 "name",
                 "in",
                 [
-                    "Purchase Order-order",
+                    "Purchase Order-orders",
                     "Payment Entry-order",
 				]
 			]

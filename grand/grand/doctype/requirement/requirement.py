@@ -12,7 +12,8 @@ class Requirement(Document):
 		for i in self.requirement_items:
 			total_moq = 0
 			for x in range(0, len(country_moq_fields)):
-				total_moq += i.__dict__[country_moq_fields[x]]
+				if i.__dict__[country_moq_fields[x]]:
+					total_moq += i.__dict__[country_moq_fields[x]]
 			if total_moq != i.final_moq:
 				frappe.throw("Total MOQ is not equal to Final MOQ in row " + str(i.idx))
 
@@ -23,7 +24,8 @@ class Requirement(Document):
 		for i in self.requirement_items:
 			total_moq = 0
 			for x in range(0, len(country_moq_fields)):
-				total_moq += i.__dict__[country_moq_fields[x]]
+				if i.__dict__[country_moq_fields[x]]:
+					total_moq += i.__dict__[country_moq_fields[x]]
 			if total_moq != i.final_moq:
 				frappe.throw("Total MOQ is not equal to Final MOQ in row " + str(i.idx))
 	@frappe.whitelist()
@@ -76,6 +78,7 @@ class Requirement(Document):
 						"item_name": i.item_name,
 						"item_description": i.item_description,
 						"moq": i.__dict__[country_moq_fields[x]],
+						"uom": i.uom,
 					})
 					order_exist.save()
 					print("EXISTING ORDER")
@@ -86,11 +89,13 @@ class Requirement(Document):
 						"date_of_requirement": self.date_of_requirement,
 						"priority": self.priority,
 						"country": i.__dict__[country_fields[x]],
+						"supplier_master": self.supplier_id,
 						"order_items": [
 							{
 								"item_name": i.item_name,
 								"item_description": i.item_description,
 								"moq": i.__dict__[country_moq_fields[x]],
+								"uom": i.uom,
 							}
 						]
 					}

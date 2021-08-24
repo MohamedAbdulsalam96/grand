@@ -8,6 +8,7 @@
   "item_name",
   "item_description",
   "item_group",
+  "uom",
   "column_break_4",
   "qty_required",
   "currency",
@@ -172,12 +173,18 @@
    "label": "Currency",
    "options": "Currency",
    "read_only": 1
+  },
+  {
+   "fieldname": "uom",
+   "fieldtype": "Link",
+   "label": "UOM",
+   "options": "UOM"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-08-24 11:48:32.553377",
+ "modified": "2021-08-24 13:56:12.440498",
  "modified_by": "Administrator",
  "module": "Grand",
  "name": "Requirement Item",
