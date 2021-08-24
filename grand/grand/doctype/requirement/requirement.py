@@ -7,15 +7,16 @@ from frappe.model.document import Document
 class Requirement(Document):
 	@frappe.whitelist()
 	def validate(self):
-		country_moq_fields = ['country_based_moq_1', 'country_based_moq_2', 'country_based_moq_3',
-							  'country_based_moq_4', 'country_based_moq_5']
-		for i in self.requirement_items:
-			total_moq = 0
-			for x in range(0, len(country_moq_fields)):
-				if i.__dict__[country_moq_fields[x]]:
-					total_moq += i.__dict__[country_moq_fields[x]]
-			if total_moq != i.final_moq:
-				frappe.throw("Total MOQ is not equal to Final MOQ in row " + str(i.idx))
+		if self.status == "Quotation Sent":
+			country_moq_fields = ['country_based_moq_1', 'country_based_moq_2', 'country_based_moq_3',
+								  'country_based_moq_4', 'country_based_moq_5']
+			for i in self.requirement_items:
+				total_moq = 0
+				for x in range(0, len(country_moq_fields)):
+					if i.__dict__[country_moq_fields[x]]:
+						total_moq += i.__dict__[country_moq_fields[x]]
+				if total_moq != i.final_moq:
+					frappe.throw("Total MOQ is not equal to Final MOQ in row " + str(i.idx))
 
 	@frappe.whitelist()
 	def on_update_after_submit(self):
