@@ -17,9 +17,27 @@ class Requirement(Document):
 						total_moq += i.__dict__[country_moq_fields[x]]
 				if total_moq != i.final_moq:
 					frappe.throw("Total MOQ is not equal to Final MOQ in row " + str(i.idx))
+	@frappe.whitelist()
+	def check_for_quotation(self):
+		country_moq_fields = ['country_based_moq_1', 'country_based_moq_2', 'country_based_moq_3',
+							  'country_based_moq_4', 'country_based_moq_5']
+		country_fields = ['country_1','country_2','country_3','country_4','country_5']
+		not_set = False
+		for i in self.requirement_items:
+			if not i.final_moq or not i.final_price:
+				not_set = True
+
+		for x in self.requirement_items:
+			for xx in range(0,len(country_moq_fields)):
+				if not x.__dict__[country_moq_fields[xx]] or not x.__dict__[country_fields[xx]]:
+					not_set = True
+		if not self.supplier_id:
+			not_set = True
+		self.for_quotation_sent = not not_set
 
 	@frappe.whitelist()
 	def on_update_after_submit(self):
+		self.check_for_quotation()
 		country_moq_fields = ['country_based_moq_1', 'country_based_moq_2', 'country_based_moq_3',
 							  'country_based_moq_4', 'country_based_moq_5']
 		for i in self.requirement_items:
@@ -29,6 +47,8 @@ class Requirement(Document):
 					total_moq += i.__dict__[country_moq_fields[x]]
 			if total_moq != i.final_moq:
 				frappe.throw("Total MOQ is not equal to Final MOQ in row " + str(i.idx))
+
+
 	@frappe.whitelist()
 	def on_submit(self):
 		self.add_status("Identifying Supplier")

@@ -1,11 +1,14 @@
 // Copyright (c) 2021, sammish and contributors
 // For license information, please see license.txt
 var existing_order = false
+
 frappe.ui.form.on('Requirement', {
-    onload_post_render: function(){
+    onload_post_render: function(frm){
         if(!cur_frm.is_new()) {
             document.querySelectorAll("[data-doctype='Order']")[2].style.display = "none";
         }
+
+
     },
     create_supplier: function(frm) {
 	    if(cur_frm.doc.supplier){
@@ -31,6 +34,9 @@ frappe.ui.form.on('Requirement', {
 
     },
 	refresh: function(frm) {
+        if(cur_frm.is_new()){
+            cur_frm.clear_table("requirement_items")
+        }
 	     cur_frm.call({
             doc: cur_frm.doc,
             method: 'check_order',
@@ -90,7 +96,7 @@ frappe.ui.form.on('Requirement', {
                     }
                 })
             }).css({'color':'white','font-weight': 'bold', 'background-color': 'blue'});
-        } else  if(cur_frm.doc.docstatus && cur_frm.doc.status === "Negotiating Price & MOQ"){
+        } else  if(cur_frm.doc.docstatus && cur_frm.doc.status === "Negotiating Price & MOQ" && cur_frm.doc.for_quotation_sent){
 	        cur_frm.add_custom_button(__("Quotation Sent"), () => {
                 cur_frm.call({
                     doc: cur_frm.doc,
@@ -159,6 +165,7 @@ frappe.ui.form.on('Requirement', {
             }).css({'color':'white','font-weight': 'bold', 'background-color': 'blue'});
         }
 
+
 	},
     currency: function () {
         for(var x=0;x<cur_frm.doc.requirement_items.length;x+=1){
@@ -176,3 +183,4 @@ cur_frm.cscript.requirement_items_add = function (frm, cdt, cdn) {
     cur_frm.refresh_field("requirement_items")
 
 }
+
