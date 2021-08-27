@@ -103,6 +103,7 @@
    "fieldname": "country_1",
    "fieldtype": "Link",
    "label": "Country 1",
+   "mandatory_depends_on": "eval: doc.country_based_moq_1 > 0",
    "options": "Country",
    "read_only_depends_on": "eval: parent.docstatus && (parent.status != \"Negotiating Price & MOQ\")"
   },
@@ -112,6 +113,7 @@
    "fieldname": "country_2",
    "fieldtype": "Link",
    "label": "Country 2",
+   "mandatory_depends_on": "eval: doc.country_based_moq_2 > 0",
    "options": "Country",
    "read_only_depends_on": "eval: parent.docstatus && (parent.status != \"Negotiating Price & MOQ\")"
   },
@@ -121,6 +123,7 @@
    "fieldname": "country_3",
    "fieldtype": "Link",
    "label": "Country 3",
+   "mandatory_depends_on": "eval: doc.country_based_moq_3 > 0",
    "options": "Country",
    "read_only_depends_on": "eval: parent.docstatus && (parent.status != \"Negotiating Price & MOQ\")"
   },
@@ -130,6 +133,7 @@
    "fieldname": "country_4",
    "fieldtype": "Link",
    "label": "Country 4",
+   "mandatory_depends_on": "eval: doc.country_based_moq_4 > 0",
    "options": "Country",
    "read_only_depends_on": "eval: parent.docstatus && (parent.status != \"Negotiating Price & MOQ\")"
   },
@@ -139,6 +143,7 @@
    "fieldname": "country_5",
    "fieldtype": "Link",
    "label": "Country 5",
+   "mandatory_depends_on": "eval: doc.country_based_moq_5 > 0",
    "options": "Country",
    "read_only_depends_on": "eval: parent.docstatus && (parent.status != \"Negotiating Price & MOQ\")"
   },
@@ -152,6 +157,7 @@
    "fieldname": "country_based_moq_1",
    "fieldtype": "Float",
    "label": "Country based MOQ 1",
+   "mandatory_depends_on": "eval: doc.country_1",
    "read_only_depends_on": "eval: parent.docstatus && (parent.status != \"Negotiating Price & MOQ\")"
   },
   {
@@ -160,6 +166,7 @@
    "fieldname": "country_based_moq_2",
    "fieldtype": "Float",
    "label": "Country based MOQ 2",
+   "mandatory_depends_on": "eval: doc.country_2",
    "read_only_depends_on": "eval: parent.docstatus && (parent.status != \"Negotiating Price & MOQ\")"
   },
   {
@@ -168,6 +175,7 @@
    "fieldname": "country_based_moq_3",
    "fieldtype": "Float",
    "label": "Country based MOQ 3",
+   "mandatory_depends_on": "eval: doc.country_3",
    "read_only_depends_on": "eval: parent.docstatus && (parent.status != \"Negotiating Price & MOQ\")"
   },
   {
@@ -176,6 +184,7 @@
    "fieldname": "country_based_moq_4",
    "fieldtype": "Float",
    "label": "Country based MOQ 4",
+   "mandatory_depends_on": "eval: doc.country_4",
    "read_only_depends_on": "eval: parent.docstatus && (parent.status != \"Negotiating Price & MOQ\")"
   },
   {
@@ -184,6 +193,7 @@
    "fieldname": "country_based_moq_5",
    "fieldtype": "Float",
    "label": "Country based MOQ 5",
+   "mandatory_depends_on": "eval: doc.country_5",
    "read_only_depends_on": "eval: parent.docstatus && (parent.status != \"Negotiating Price & MOQ\")"
   },
   {
@@ -209,7 +219,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-08-26 23:24:39.617722",
+ "modified": "2021-08-27 22:41:27.788704",
  "modified_by": "Administrator",
  "module": "Grand",
  "name": "Requirement Item",

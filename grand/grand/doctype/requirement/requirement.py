@@ -26,15 +26,19 @@ class Requirement(Document):
 		for i in self.requirement_items:
 			if not i.final_moq or not i.final_price:
 				not_set = True
-
+		total_moq = 0
 		for x in self.requirement_items:
 			for xx in range(0,len(country_moq_fields)):
-				if not x.__dict__[country_moq_fields[xx]] or not x.__dict__[country_fields[xx]]:
-					not_set = True
+				total_moq += x.__dict__[country_moq_fields[xx]]
+
+			if total_moq != x.final_moq:
+				not_set = True
+
 		if not self.supplier_id:
 			not_set = True
-		self.for_quotation_sent = not not_set
-
+		frappe.db.sql(""" UPDATE `tabRequirement` SET for_quotation_sent=%s WHERE name=%s""", (not not_set, self.name))
+		frappe.db.commit()
+		self.reload()
 	@frappe.whitelist()
 	def on_update_after_submit(self):
 		self.check_for_quotation()
@@ -45,6 +49,7 @@ class Requirement(Document):
 			for x in range(0, len(country_moq_fields)):
 				if i.__dict__[country_moq_fields[x]]:
 					total_moq += i.__dict__[country_moq_fields[x]]
+
 			if total_moq != i.final_moq:
 				frappe.throw("Total MOQ is not equal to Final MOQ in row " + str(i.idx))
 
