@@ -131,8 +131,7 @@
    "fieldname": "currency",
    "fieldtype": "Link",
    "label": "Currency",
-   "options": "Currency",
-   "read_only_depends_on": "eval: doc.requirement_items.length == 0"
+   "options": "Currency"
   },
   {
    "allow_on_submit": 1,
@@ -146,7 +145,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-08-27 22:37:05.209725",
+ "modified": "2021-08-29 22:00:03.253358",
  "modified_by": "Administrator",
  "module": "Grand",
  "name": "Requirement",
