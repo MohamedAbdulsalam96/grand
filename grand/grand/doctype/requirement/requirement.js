@@ -96,7 +96,7 @@ frappe.ui.form.on('Requirement', {
                     }
                 })
             }).css({'color':'white','font-weight': 'bold', 'background-color': 'blue'});
-        } else  if(cur_frm.doc.docstatus && cur_frm.doc.status === "Negotiating Price & MOQ" && cur_frm.doc.for_quotation_sent){
+        } else  if(cur_frm.doc.docstatus && cur_frm.doc.status === "Negotiating Price & MOQ"){
 	        cur_frm.add_custom_button(__("Quotation Sent"), () => {
                 cur_frm.call({
                     doc: cur_frm.doc,

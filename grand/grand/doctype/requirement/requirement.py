@@ -22,26 +22,26 @@ class Requirement(Document):
 		country_moq_fields = ['country_based_moq_1', 'country_based_moq_2', 'country_based_moq_3',
 							  'country_based_moq_4', 'country_based_moq_5']
 		country_fields = ['country_1','country_2','country_3','country_4','country_5']
-		not_set = False
+		if not self.supplier_id:
+			frappe.throw("Supplier is not created")
+
 		for i in self.requirement_items:
 			if not i.final_moq or not i.final_price:
-				not_set = True
+				frappe.throw("Final MOQ or Final Price is not set for row " + str(i.idx))
 		total_moq = 0
 		for x in self.requirement_items:
 			for xx in range(0,len(country_moq_fields)):
 				total_moq += x.__dict__[country_moq_fields[xx]]
 
 			if total_moq != x.final_moq:
-				not_set = True
+				frappe.throw("Total MOQ is not equal to Final MOQ in row " + str(x.idx))
 
-		if not self.supplier_id:
-			not_set = True
-		frappe.db.sql(""" UPDATE `tabRequirement` SET for_quotation_sent=%s WHERE name=%s""", (not not_set, self.name))
-		frappe.db.commit()
+		# frappe.db.sql(""" UPDATE `tabRequirement` SET for_quotation_sent=%s WHERE name=%s""", (not not_set, self.name))
+		# frappe.db.commit()
 		self.reload()
 	@frappe.whitelist()
 	def on_update_after_submit(self):
-		self.check_for_quotation()
+		# self.check_for_quotation()
 		country_moq_fields = ['country_based_moq_1', 'country_based_moq_2', 'country_based_moq_3',
 							  'country_based_moq_4', 'country_based_moq_5']
 		for i in self.requirement_items:
@@ -59,6 +59,8 @@ class Requirement(Document):
 		self.add_status("Identifying Supplier")
 	@frappe.whitelist()
 	def change_status(self, status):
+		if status == "Quotation Sent":
+			self.check_for_quotation()
 		frappe.db.sql(""" UPDATE `tabRequirement` SET status=%s WHERE name=%s """, (status, self.name))
 		frappe.db.commit()
 		self.add_status(status)
