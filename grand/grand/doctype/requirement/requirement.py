@@ -101,37 +101,35 @@ class Requirement(Document):
 		country_moq_fields = ['country_based_moq_1','country_based_moq_2','country_based_moq_3','country_based_moq_4','country_based_moq_5']
 		for i in self.requirement_items:
 			for x in range(0,len(country_fields)):
-				existing_order = frappe.db.sql(""" SELECT * FROM `tabOrder` WHERE country=%s and requirement=%s """, (i.__dict__[country_fields[x]],self.name),as_dict=1)
-				if len(existing_order) > 0:
-					order_exist = frappe.get_doc("Order", existing_order[0].name)
-					order_exist.append("order_items",{
-						"item_name": i.item_name,
-						"item_description": i.item_description,
-						"moq": i.__dict__[country_moq_fields[x]],
-						"uom": i.uom,
-					})
-					order_exist.save()
-					print("EXISTING ORDER")
-				else:
-					obj = {
-						"doctype": "Order",
-						"requirement": self.name,
-						"date_of_requirement": self.date_of_requirement,
-						"priority": self.priority,
-						"country": i.__dict__[country_fields[x]],
-						"supplier_master": self.supplier_id,
-						"order_items": [
-							{
-								"item_name": i.item_name,
-								"item_description": i.item_description,
-								"moq": i.__dict__[country_moq_fields[x]],
-								"uom": i.uom,
-							}
-						]
-					}
-					order = frappe.get_doc(obj).insert()
-					print("NEW ORDER")
-					print(order.name)
+				if i.__dict__[country_moq_fields[x]] > 0:
+					existing_order = frappe.db.sql(""" SELECT * FROM `tabOrder` WHERE country=%s and requirement=%s """, (i.__dict__[country_fields[x]],self.name),as_dict=1)
+					if len(existing_order) > 0:
+						order_exist = frappe.get_doc("Order", existing_order[0].name)
+						order_exist.append("order_items",{
+							"item_name": i.item_name,
+							"item_description": i.item_description,
+							"moq": i.__dict__[country_moq_fields[x]],
+							"uom": i.uom,
+						})
+						order_exist.save()
+					else:
+						obj = {
+							"doctype": "Order",
+							"requirement": self.name,
+							"date_of_requirement": self.date_of_requirement,
+							"priority": self.priority,
+							"country": i.__dict__[country_fields[x]],
+							"supplier_master": self.supplier_id,
+							"order_items": [
+								{
+									"item_name": i.item_name,
+									"item_description": i.item_description,
+									"moq": i.__dict__[country_moq_fields[x]],
+									"uom": i.uom,
+								}
+							]
+						}
+						order = frappe.get_doc(obj).insert()
 
 	@frappe.whitelist()
 	def check_order(self):
