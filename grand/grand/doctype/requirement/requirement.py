@@ -32,7 +32,7 @@ class Requirement(Document):
 		for x in self.requirement_items:
 			total_moq = 0
 			for xx in range(0,len(country_moq_fields)):
-				if i.__dict__[country_moq_fields[x]]:
+				if i.__dict__[country_moq_fields[xx]]:
 					total_moq += x.__dict__[country_moq_fields[xx]]
 
 			if total_moq != x.final_moq:
