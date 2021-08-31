@@ -90,9 +90,25 @@ class Order(Document):
             frappe.db.sql(""" UPDATE `tabOrder` SET purchase_order=%s WHERE name=%s """,(new_po.name, self.name))
             frappe.db.commit()
             return new_po.name
+
+    @frappe.whitelist()
+    def check_final_moq(self):
+        print("CHECK FINAL MOQ")
+        req = frappe.db.sql(""" SELECT * FROM `tabRequirement Item` WHERE parent=%s """, self.requirement, as_dict=1)
+
+        country_moq_fields = ['country_based_moq_1', 'country_based_moq_2', 'country_based_moq_3',
+                              'country_based_moq_4', 'country_based_moq_5']
+        country_order_fields = ['approved_country_1', 'approved_country_2', 'approved_country_3', 'approved_country_4', 'approved_country_5']
+        print(req)
+        for i in req:
+            for x in range(0, len(country_moq_fields)):
+                print(i[country_moq_fields[x]])
+                print(i[country_order_fields[x]])
+                if i[country_moq_fields[x]] > 0 and not i[country_order_fields[x]]:
+                    frappe.throw("Final MOQ of item " + i.item_description + " for country " + self.country + " is not yet approved")
     @frappe.whitelist()
     def create_po_requirements(self):
-
+        self.check_final_moq()
         orders = frappe.db.sql(""" SELECT * FROM `tabOrder` WHERE requirement=%s and (purchase_order is null or purchase_order='') and status='Approved' """, self.requirement, as_dict=1)
         items = []
         orders_po = []

@@ -112,41 +112,8 @@ frappe.ui.form.on('Requirement', {
                     }
                 })
             }).css({'color':'white','font-weight': 'bold', 'background-color': 'blue'});
-        } else  if(cur_frm.doc.docstatus && cur_frm.doc.status === "Quotation Sent"){
-	        cur_frm.add_custom_button(__("Approve"), () => {
-                cur_frm.call({
-                    doc: cur_frm.doc,
-                    method: 'change_status',
-                    args: {
-                      status: "Approved"
-                    },
-                    freeze: true,
-                    freeze_message: "Changing Status...",
-                    async: false,
-                    callback: (r) => {
-                        cur_frm.reload_doc()
-                    }
-                })
-            }).css({'color':'white','font-weight': 'bold', 'background-color': 'blue'});
-
-	        cur_frm.add_custom_button(__("Reject"), () => {
-                cur_frm.call({
-                    doc: cur_frm.doc,
-                    method: 'change_status',
-                    args: {
-                      status: "Rejected"
-                    },
-                    freeze: true,
-                    freeze_message: "Changing Status...",
-                    async: false,
-                    callback: (r) => {
-                        cur_frm.reload_doc()
-                    }
-                })
-            }).css({'color':'white','font-weight': 'bold', 'background-color': 'red'});
-        }
-        else  if(cur_frm.doc.docstatus && cur_frm.doc.status === "Approved" && !existing_order){
-	        cur_frm.add_custom_button(__("Create Orders"), () => {
+        } else  if(cur_frm.doc.docstatus && cur_frm.doc.status === "Quotation Sent" && !existing_order){
+	         cur_frm.add_custom_button(__("Create Orders"), () => {
                 cur_frm.call({
                     doc: cur_frm.doc,
                     method: 'create_order',
@@ -164,7 +131,6 @@ frappe.ui.form.on('Requirement', {
                 })
             }).css({'color':'white','font-weight': 'bold', 'background-color': 'blue'});
         }
-
 
 	},
     currency: function () {

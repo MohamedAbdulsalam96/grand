@@ -32,7 +32,7 @@ class Requirement(Document):
 		for x in self.requirement_items:
 			total_moq = 0
 			for xx in range(0,len(country_moq_fields)):
-				if i.__dict__[country_moq_fields[xx]]:
+				if x.__dict__[country_moq_fields[xx]]:
 					total_moq += x.__dict__[country_moq_fields[xx]]
 
 			if total_moq != x.final_moq:
@@ -99,6 +99,7 @@ class Requirement(Document):
 	def create_order(self):
 		country_fields = ['country_1','country_2','country_3','country_4','country_5']
 		country_moq_fields = ['country_based_moq_1','country_based_moq_2','country_based_moq_3','country_based_moq_4','country_based_moq_5']
+		country_order_fields = ['order_1','order_2','order_3','order_4','order_5']
 		for i in self.requirement_items:
 			for x in range(0,len(country_fields)):
 				if i.__dict__[country_moq_fields[x]] > 0:
@@ -112,6 +113,9 @@ class Requirement(Document):
 							"uom": i.uom,
 						})
 						order_exist.save()
+						query = """ UPDATE `tabRequirement Item` SET {0}='{1}' WHERE name='{2}'""".format(country_order_fields[x],existing_order[0].name, i.name)
+						frappe.db.sql(query)
+						frappe.db.commit()
 					else:
 						obj = {
 							"doctype": "Order",
@@ -130,6 +134,10 @@ class Requirement(Document):
 							]
 						}
 						order = frappe.get_doc(obj).insert()
+						query1 = """ UPDATE `tabRequirement Item` SET {0}='{1}' WHERE name='{2}'""".format(country_order_fields[x],order.name, i.name)
+
+						frappe.db.sql(query1)
+						frappe.db.commit()
 
 	@frappe.whitelist()
 	def check_order(self):
