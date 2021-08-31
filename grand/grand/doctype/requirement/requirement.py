@@ -28,10 +28,12 @@ class Requirement(Document):
 		for i in self.requirement_items:
 			if not i.final_moq or not i.final_price:
 				frappe.throw("Final MOQ or Final Price is not set for row " + str(i.idx))
-		total_moq = 0
+
 		for x in self.requirement_items:
+			total_moq = 0
 			for xx in range(0,len(country_moq_fields)):
-				total_moq += x.__dict__[country_moq_fields[xx]]
+				if i.__dict__[country_moq_fields[x]]:
+					total_moq += x.__dict__[country_moq_fields[xx]]
 
 			if total_moq != x.final_moq:
 				frappe.throw("Total MOQ is not equal to Final MOQ in row " + str(x.idx))
