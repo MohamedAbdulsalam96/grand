@@ -249,47 +249,47 @@
   },
   {
    "allow_on_submit": 1,
-   "default": "0",
    "depends_on": "eval: parent.docstatus && (parent.status == \"Approved\" || parent.status == \"Reject\" || parent.status == \"Quotation Sent\" )",
    "fieldname": "approved_country_1",
-   "fieldtype": "Check",
+   "fieldtype": "Select",
    "label": "Approved 1",
+   "options": "\nApproved\nRejected",
    "read_only_depends_on": "eval: doc.country_based_moq_1 == 0 || !frappe.user_roles.includes(doc.country_1)"
   },
   {
    "allow_on_submit": 1,
-   "default": "0",
    "depends_on": "eval: parent.docstatus && (parent.status == \"Approved\" || parent.status == \"Reject\" || parent.status == \"Quotation Sent\" )",
    "fieldname": "approved_country_2",
-   "fieldtype": "Check",
+   "fieldtype": "Select",
    "label": "Approved 2",
+   "options": "\nApproved\nRejected",
    "read_only_depends_on": "eval: doc.country_based_moq_2 == 0 || !frappe.user_roles.includes(doc.country_2)"
   },
   {
    "allow_on_submit": 1,
-   "default": "0",
    "depends_on": "eval: parent.docstatus && (parent.status == \"Approved\" || parent.status == \"Reject\" || parent.status == \"Quotation Sent\" )",
    "fieldname": "approved_country_3",
-   "fieldtype": "Check",
+   "fieldtype": "Select",
    "label": "Approved 3",
+   "options": "\nApproved\nRejected",
    "read_only_depends_on": "eval: doc.country_based_moq_3 == 0 || !frappe.user_roles.includes(doc.country_3)"
   },
   {
    "allow_on_submit": 1,
-   "default": "0",
    "depends_on": "eval: parent.docstatus && (parent.status == \"Approved\" || parent.status == \"Reject\" || parent.status == \"Quotation Sent\" )",
    "fieldname": "approved_country_4",
-   "fieldtype": "Check",
+   "fieldtype": "Select",
    "label": "Approved 4",
+   "options": "\nApproved\nRejected",
    "read_only_depends_on": "eval: doc.country_based_moq_4 == 0 || !frappe.user_roles.includes(doc.country_4)"
   },
   {
    "allow_on_submit": 1,
-   "default": "0",
    "depends_on": "eval: parent.docstatus && (parent.status == \"Approved\" || parent.status == \"Reject\" || parent.status == \"Quotation Sent\" )",
    "fieldname": "approved_country_5",
-   "fieldtype": "Check",
+   "fieldtype": "Select",
    "label": "Approved 5",
+   "options": "\nApproved\nRejected",
    "read_only_depends_on": "eval: doc.country_based_moq_5 == 0 || !frappe.user_roles.includes(doc.country_5)"
   },
   {
@@ -399,7 +399,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-08-31 23:52:52.479214",
+ "modified": "2021-09-02 12:55:21.633676",
  "modified_by": "Administrator",
  "module": "Grand",
  "name": "Requirement Item",
