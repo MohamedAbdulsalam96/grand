@@ -117,50 +117,98 @@ class Requirement(Document):
 						(i.__dict__[country_moq_fields[x]] <= 0 or i.__dict__[approve_fields[x]] == "Rejected" or not i.__dict__[approve_fields[x]] or i.__dict__[approve_fields[x]] == ''):
 					return False
 		return True
+	# @frappe.whitelist()
+	# def create_order(self):
+	# 	country_fields = ['country_1','country_2','country_3','country_4','country_5']
+	# 	approve_fields = ['approve_1','approve_2','approve_3','approve_4','approve_5']
+	# 	country_moq_fields = ['country_based_moq_1','country_based_moq_2','country_based_moq_3','country_based_moq_4','country_based_moq_5']
+	# 	country_order_fields = ['order_1','order_2','order_3','order_4','order_5']
+    #
+	# 	items = {}
+	# 	for i in self.requirement_items:
+	# 		for x in range(0,len(country_fields)):
+	# 			if i.__dict__[country_fields[x]] and self.check_country(i.__dict__[country_fields[x]]):
+	# 				if i.__dict__[country_fields[x]] not in items:
+	# 					items[i.__dict__[country_fields[x]]] = [i]
+	# 				else:
+	# 					items[i.__dict__[country_fields[x]]].append(i)
+    #
+	# 	for item in items:
+	# 		order_items = []
+	# 		for yyy in items[item]:
+	# 			order_items.append({
+	# 				"item_name": yyy.item_name,
+	# 				"item_description": yyy.item_description,
+	# 				"moq": yyy.__dict__[country_moq_fields[x]],
+	# 				"uom": yyy.uom,
+	# 			})
+	# 		obj = {
+	# 			"doctype": "Order",
+	# 			"requirement": self.name,
+	# 			"date_of_requirement": self.date_of_requirement,
+	# 			"priority": self.priority,
+	# 			"country": item,
+	# 			"supplier_master": self.supplier_id,
+	# 			"order_items": order_items
+	# 		}
+	# 		order = frappe.get_doc(obj).insert()
+	# 		for yyy in items[item]:
+	# 			for xxx in  range(0, len(country_fields)):
+	# 				if yyy.__dict__[country_fields[xxx]] == item:
+	# 					query1 = """ UPDATE `tabRequirement Item` SET {0}='{1}' WHERE name='{2}'""".format(country_order_fields[xxx],order.name, yyy.name)
+	# 					frappe.db.sql(query1)
+	# 					frappe.db.commit()
+
 	@frappe.whitelist()
 	def create_order(self):
-		country_fields = ['country_1','country_2','country_3','country_4','country_5']
-		approve_fields = ['approve_1','approve_2','approve_3','approve_4','approve_5']
-		country_moq_fields = ['country_based_moq_1','country_based_moq_2','country_based_moq_3','country_based_moq_4','country_based_moq_5']
-		country_order_fields = ['order_1','order_2','order_3','order_4','order_5']
-
-		items = {}
+		country_fields = ['country_1', 'country_2', 'country_3', 'country_4', 'country_5']
+		country_moq_fields = ['country_based_moq_1', 'country_based_moq_2', 'country_based_moq_3',
+							  'country_based_moq_4', 'country_based_moq_5']
+		country_order_fields = ['order_1', 'order_2', 'order_3', 'order_4', 'order_5']
 		for i in self.requirement_items:
-			for x in range(0,len(country_fields)):
-				if i.__dict__[country_fields[x]] and self.check_country(i.__dict__[country_fields[x]]):
-					if i.__dict__[country_fields[x]] not in items:
-						items[i.__dict__[country_fields[x]]] = [i]
+			for x in range(0, len(country_fields)):
+				if i.__dict__[country_moq_fields[x]] > 0:
+					existing_order = frappe.db.sql(
+						""" SELECT * FROM `tabOrder` WHERE country=%s and requirement=%s """,
+						(i.__dict__[country_fields[x]], self.name), as_dict=1)
+					if len(existing_order) > 0:
+						order_exist = frappe.get_doc("Order", existing_order[0].name)
+						order_exist.append("order_items", {
+							"item_name": i.item_name,
+							"item_description": i.item_description,
+							"moq": i.__dict__[country_moq_fields[x]],
+							"uom": i.uom,
+							"price": i.final_price,
+						})
+						order_exist.save()
+						query = """ UPDATE `tabRequirement Item` SET {0}='{1}' WHERE name='{2}'""".format(
+							country_order_fields[x], existing_order[0].name, i.name)
+						frappe.db.sql(query)
+						frappe.db.commit()
 					else:
-						items[i.__dict__[country_fields[x]]].append(i)
+						obj = {
+							"doctype": "Order",
+							"requirement": self.name,
+							"date_of_requirement": self.date_of_requirement,
+							"priority": self.priority,
+							"country": i.__dict__[country_fields[x]],
+							"supplier_master": self.supplier_id,
+							"order_items": [
+								{
+									"item_name": i.item_name,
+									"item_description": i.item_description,
+									"moq": i.__dict__[country_moq_fields[x]],
+									"uom": i.uom,
+									"price": i.final_price,
+								}
+							]
+						}
+						order = frappe.get_doc(obj).insert()
+						query1 = """ UPDATE `tabRequirement Item` SET {0}='{1}' WHERE name='{2}'""".format(
+							country_order_fields[x], order.name, i.name)
 
-		for item in items:
-			print ("iteeeeeeeeeeeeeems")
-			print (item)
-			order_items = []
-			for yyy in items[item]:
-				order_items.append({
-					"item_name": yyy.item_name,
-					"item_description": yyy.item_description,
-					"moq": yyy.__dict__[country_moq_fields[x]],
-					"uom": yyy.uom,
-				})
-			obj = {
-				"doctype": "Order",
-				"requirement": self.name,
-				"date_of_requirement": self.date_of_requirement,
-				"priority": self.priority,
-				"country": item,
-				"supplier_master": self.supplier_id,
-				"order_items": order_items
-			}
-			order = frappe.get_doc(obj).insert()
-			for yyy in items[item]:
-				for xxx in  range(0, len(country_fields)):
-					if yyy.__dict__[country_fields[xxx]] == item:
-						query1 = """ UPDATE `tabRequirement Item` SET {0}='{1}' WHERE name='{2}'""".format(country_order_fields[xxx],order.name, yyy.name)
 						frappe.db.sql(query1)
 						frappe.db.commit()
-
 	@frappe.whitelist()
 	def check_order(self):
 		order = frappe.db.sql(""" SELECT COUNT(*) as count from `tabOrder` WHERE requirement=%s """, self.name, as_dict=1)
