@@ -34,7 +34,7 @@ frappe.ui.form.on('Order', {
         item_description.read_only = cur_frm.doc.reorder
     },
     refresh: function () {
-        if(!cur_frm.doc.docstatus && !cur_frm.is_new() && cur_frm.doc.with_sku > 0){
+        if(!cur_frm.doc.docstatus && !cur_frm.is_new() && cur_frm.doc.with_sku > 0 && cur_frm.doc.status === "Order Approved"){
             cur_frm.page.add_action_item(__("Approve SKU"), function() {
                change_status(cur_frm,"SKU Approved")
 
@@ -58,7 +58,15 @@ frappe.ui.form.on('Order', {
         item_name_master.read_only = !cur_frm.doc.reorder
         item_name.read_only = cur_frm.doc.reorder
         item_description.read_only = cur_frm.doc.reorder
-            if(!cur_frm.doc.docstatus && !cur_frm.is_new() && cur_frm.doc.status === "Pending" && cur_frm.doc.with_sku < 1){
+            if(!cur_frm.doc.docstatus && !cur_frm.is_new() && cur_frm.doc.status === "Pending" ){
+                var button1 = cur_frm.add_custom_button(__("Approve Order"), () => {
+                    change_status(cur_frm,"Order Approved")
+                }).css({'color':'white','font-weight': 'bold', 'background-color': 'blue'});
+                 var button1 = cur_frm.add_custom_button(__("Reject Order"), () => {
+                    change_status(cur_frm,"Order Rejected")
+                }).css({'color':'white','font-weight': 'bold', 'background-color': 'red'});
+
+            } else if(!cur_frm.doc.docstatus && !cur_frm.is_new() && cur_frm.doc.status === "Order Approved" && cur_frm.doc.with_sku < 1){
                 var button1 = cur_frm.add_custom_button(__("Identifying Competitor Product"), () => {
                     change_status(cur_frm,"Identifying Competitor Product")
                 }).css({'color':'white','font-weight': 'bold', 'background-color': 'blue'});

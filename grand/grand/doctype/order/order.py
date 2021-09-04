@@ -74,9 +74,11 @@ class Order(Document):
     def generate_po(self):
         if not self.supplier_master:
             frappe.throw("Please create the supplier through Create Supplier Button in Linked Requirement")
+
         if self.requirement:
             po_name = self.create_po_requirements()
             return po_name
+
         else:
             obj = {
                 "doctype": "Purchase Order",
@@ -91,24 +93,24 @@ class Order(Document):
             frappe.db.commit()
             return new_po.name
 
-    @frappe.whitelist()
-    def check_final_moq(self):
-        print("CHECK FINAL MOQ")
-        req = frappe.db.sql(""" SELECT * FROM `tabRequirement Item` WHERE parent=%s """, self.requirement, as_dict=1)
-
-        country_moq_fields = ['country_based_moq_1', 'country_based_moq_2', 'country_based_moq_3',
-                              'country_based_moq_4', 'country_based_moq_5']
-        country_order_fields = ['approved_country_1', 'approved_country_2', 'approved_country_3', 'approved_country_4', 'approved_country_5']
-        print(req)
-        for i in req:
-            for x in range(0, len(country_moq_fields)):
-                print(i[country_moq_fields[x]])
-                print(i[country_order_fields[x]])
-                if i[country_moq_fields[x]] > 0 and not i[country_order_fields[x]]:
-                    frappe.throw("Final MOQ of item " + i.item_description + " for country " + self.country + " is not yet approved")
+    # @frappe.whitelist()
+    # def check_final_moq(self):
+    #     print("CHECK FINAL MOQ")
+    #     req = frappe.db.sql(""" SELECT * FROM `tabRequirement Item` WHERE parent=%s """, self.requirement, as_dict=1)
+    #
+    #     country_moq_fields = ['country_based_moq_1', 'country_based_moq_2', 'country_based_moq_3',
+    #                           'country_based_moq_4', 'country_based_moq_5']
+    #     country_order_fields = ['approved_country_1', 'approved_country_2', 'approved_country_3', 'approved_country_4', 'approved_country_5']
+    #     print(req)
+    #     for i in req:
+    #         for x in range(0, len(country_moq_fields)):
+    #             print(i[country_moq_fields[x]])
+    #             print(i[country_order_fields[x]])
+    #             if i[country_moq_fields[x]] > 0 and not i[country_order_fields[x]]:
+    #                 frappe.throw("Final MOQ of item " + i.item_description + " for country " + self.country + " is not yet approved")
     @frappe.whitelist()
     def create_po_requirements(self):
-        self.check_final_moq()
+        # self.check_final_moq()
         orders = frappe.db.sql(""" SELECT * FROM `tabOrder` WHERE requirement=%s and (purchase_order is null or purchase_order='') and status='Approved' """, self.requirement, as_dict=1)
         items = []
         orders_po = []
@@ -116,6 +118,8 @@ class Order(Document):
             orders_po.append({"order": i.name})
             order_items = frappe.db.sql(""" SELECT * FROM `tabOrder Item` WHERE parent=%s """, i.name, as_dict=1)
             for ii in order_items:
+                if not ii.item:
+                    frappe.throw("Item/s Not Created. Please create items through Create Items Button below Order Items table")
                 items.append({
                     "item_code": ii.item,
                     "item_name": ii.item_description,

@@ -43,7 +43,6 @@
    "fetch_if_empty": 1,
    "fieldname": "supplier_name",
    "fieldtype": "Data",
-   "hidden": 1,
    "label": "Supplier Name",
    "read_only": 1,
    "read_only_depends_on": "eval: [\"Rejected\", \"Approved\",\"SKU Approved\",\"SKU Rejected\",\"Identifying Competitor Product\",\"Checking Requirement\",\"Finalizing Order Quantity\",\"Negotiating Price\"].includes(doc.status)"
@@ -139,7 +138,7 @@
    "fieldtype": "Select",
    "hidden": 1,
    "label": "Status",
-   "options": "Identifying Competitor Product\nChecking Requirement\nFinalizing Order Quantity\nNegotiating Price\nPending\nSKU Approved\nSKU Rejected\nApproved\nRejected"
+   "options": "Identifying Competitor Product\nChecking Requirement\nFinalizing Order Quantity\nNegotiating Price\nPending\nSKU Approved\nSKU Rejected\nApproved\nRejected\nOrder Approved\nOrder Rejected"
   },
   {
    "depends_on": "eval: !doc.created_items && !doc.reorder",
@@ -192,7 +191,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-08-24 01:15:47.837695",
+ "modified": "2021-09-04 16:28:08.885698",
  "modified_by": "Administrator",
  "module": "Grand",
  "name": "Order",
