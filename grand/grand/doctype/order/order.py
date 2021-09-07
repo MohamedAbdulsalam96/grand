@@ -150,6 +150,7 @@ class Order(Document):
                 "item_name": i.item_description,
                 "qty": i.moq,
                 "rate": i.price,
+                "uom": i.uom,
                 "schedule_date": self.date_of_requirement,
 
             })

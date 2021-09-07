@@ -25,6 +25,7 @@ cur_frm.cscript.order = function (frm, cdt, cdn) {
                         qty: doc.order_items[x].moq,
                         rate: doc.order_items[x].price,
                         schedule_date: doc.date_of_requirement,
+                        uom: doc.order_items[x].uom
                     });
 
                     cur_frm.refresh_field('items');
@@ -40,6 +41,7 @@ cur_frm.cscript.order = function (frm, cdt, cdn) {
                         qty: doc.order_items[x].moq,
                         rate: doc.order_items[x].price,
                         schedule_date: doc.date_of_requirement,
+                        uom: doc.order_items[x].uom
                     });
 
                     cur_frm.refresh_field('items');
