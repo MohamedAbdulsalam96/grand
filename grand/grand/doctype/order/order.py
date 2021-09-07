@@ -148,6 +148,7 @@ class Order(Document):
             items.append({
                 "item_code": i.item_name_master,
                 "item_name": i.item_description,
+                "description": i.item_description,
                 "qty": i.moq,
                 "rate": i.price,
                 "uom": i.uom,

@@ -22,6 +22,7 @@ cur_frm.cscript.order = function (frm, cdt, cdn) {
                     cur_frm.add_child('items', {
                         item_code: doc.order_items[x].item_name_master ? doc.order_items[x].item_name_master : doc.order_items[x].item,
                         item_name: doc.order_items[x].item_description,
+                        description: doc.order_items[x].item_description,
                         qty: doc.order_items[x].moq,
                         rate: doc.order_items[x].price,
                         schedule_date: doc.date_of_requirement,
@@ -40,6 +41,7 @@ cur_frm.cscript.order = function (frm, cdt, cdn) {
                         item_name: doc.order_items[x].item_description,
                         qty: doc.order_items[x].moq,
                         rate: doc.order_items[x].price,
+                        description: doc.order_items[x].item_description,
                         schedule_date: doc.date_of_requirement,
                         uom: doc.order_items[x].uom
                     });
