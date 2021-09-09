@@ -26,7 +26,6 @@
   "more_information_section",
   "sku_rejection_note",
   "order_rejection_note",
-  "purchase_order",
   "with_sku",
   "amended_from"
  ],
@@ -126,13 +125,6 @@
    "label": "More Information"
   },
   {
-   "fieldname": "purchase_order",
-   "fieldtype": "Link",
-   "label": "Purchase Order",
-   "options": "Purchase Order",
-   "read_only": 1
-  },
-  {
    "default": "Pending",
    "fieldname": "status",
    "fieldtype": "Select",
@@ -191,7 +183,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-09-04 16:28:08.885698",
+ "modified": "2021-09-09 17:09:34.269352",
  "modified_by": "Administrator",
  "module": "Grand",
  "name": "Order",

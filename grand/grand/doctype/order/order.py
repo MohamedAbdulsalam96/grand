@@ -138,9 +138,6 @@ class Order(Document):
         print("POOOOOOOOOOOOOOOOOOOOOOOOOO")
         print(obj)
         new_po = frappe.get_doc(obj).insert()
-        for order in orders:
-            frappe.db.sql(""" UPDATE `tabOrder` SET purchase_order=%s WHERE name=%s""",(new_po.name,order.name))
-            frappe.db.commit()
         return new_po.name
     def get_po_items(self):
         items = []
