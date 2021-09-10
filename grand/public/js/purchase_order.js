@@ -29,7 +29,7 @@ cur_frm.cscript.order = function (frm, cdt, cdn) {
                     });
 
                     cur_frm.refresh_field('items');
-
+cur_frm.trigger("qty")
                 }
             } else {
 
@@ -39,8 +39,8 @@ cur_frm.cscript.order = function (frm, cdt, cdn) {
                         for(var xxx=0;xxx<cur_frm.doc.items.length;xxx+=1){
                             if(cur_frm.doc.items[xxx].item_code === final_item_name){
                                 cur_frm.doc.items[xxx].qty += doc.order_items[x].moq
-                                                        cur_frm.refresh_field('items');
-
+                                cur_frm.refresh_field('items');
+cur_frm.trigger("qty")
                             }
                         }
                     } else {
@@ -55,6 +55,7 @@ cur_frm.cscript.order = function (frm, cdt, cdn) {
                         });
 
                         cur_frm.refresh_field('items');
+                        cur_frm.trigger("qty")
                     }
 
 
