@@ -64,3 +64,28 @@ cur_frm.trigger("qty")
         })
     }
 }
+
+cur_frm.cscript.before_orders_remove = function(frm, cdt, cdn){
+    var d = locals[cdt][cdn]
+    if(d.order) {
+        frappe.db.get_doc('Order', d.order)
+            .then(doc => {
+               for (var x = 0; x < doc.order_items.length; x += 1) {
+                    var final_item_name = doc.order_items[x].item_name_master ? doc.order_items[x].item_name_master : doc.order_items[x].item
+                    if((cur_frm.doc.items.filter(item => (item.item_code === final_item_name))).length > 0){
+                        for(var xxx=0;xxx<cur_frm.doc.items.length;xxx+=1){
+                            if(cur_frm.doc.items[xxx].item_code === final_item_name && cur_frm.doc.items[xxx].qty > doc.order_items[x].moq){
+                                cur_frm.doc.items[xxx].qty -= doc.order_items[x].moq
+                                cur_frm.refresh_field('items');
+                                cur_frm.trigger("qty")
+                            } else if(cur_frm.doc.items[xxx].item_code === final_item_name && cur_frm.doc.items[xxx].qty === doc.order_items[x].moq){
+                                cur_frm.doc.items[xxx].qty -= doc.order_items[x].moq
+                                 cur_frm.get_field("items").grid.grid_rows[x].remove();
+                                cur_frm.refresh_field('items');
+                            }
+                        }
+                    }
+                }
+            })
+    }
+}

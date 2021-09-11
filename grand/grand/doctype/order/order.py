@@ -84,6 +84,7 @@ class Order(Document):
                 "doctype": "Purchase Order",
                 "supplier": self.supplier_master,
                 "schedule_date": self.date_of_requirement,
+                "transaction_date": self.date_of_requirement,
                 "order": self.name,
                 "items": self.get_po_items(),
                 "orders": [{"order": self.name}]
@@ -131,6 +132,8 @@ class Order(Document):
             "doctype": "Purchase Order",
             "supplier": self.supplier_master,
             "schedule_date": self.date_of_requirement,
+            "transaction_date": self.date_of_requirement,
+
             "order": self.name,
             "items": items,
             "orders": orders_po
