@@ -93,7 +93,9 @@ doctype_js = {
 
 doc_events = {
 	"Purchase Order": {
-		"on_submit": "grand.doc_events.purchase_order.on_submit_po"
+		"on_submit": "grand.doc_events.purchase_order.on_submit_po",
+		"on_trash": "grand.doc_events.purchase_order.on_trash_po",
+		"validate": "grand.doc_events.purchase_order.validate_po",
 	}
 }
 
@@ -183,6 +185,7 @@ fixtures = [
                 [
                     "Purchase Order-orders",
                     "Payment Entry-order",
+                    "Purchase Order Item-final_moq",
 				]
 			]
 		]

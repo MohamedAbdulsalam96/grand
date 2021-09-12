@@ -121,13 +121,13 @@ class Order(Document):
             for ii in order_items:
                 if not ii.item:
                     frappe.throw("Item/s Not Created. Please create items through Create Items Button below Order Items table")
-                items.append({
-                    "item_code": ii.item,
-                    "item_name": ii.item_description,
-                    "qty": ii.moq,
-                    "rate": ii.price,
-                    "schedule_date": self.date_of_requirement,
-                })
+
+                sum_qty = frappe.db.sql(""" SELECT * FROM `tabRequirement Item` WHERE parent=%s and item_name=%s""", (self.requirement,ii.item_name),as_dict=1)
+                sum_qty_orders = frappe.db.sql(""" SELECT SUM(OI.moq) as sum_qty FROM `tabOrder` O INNER JOIN `tabOrder Item` OI ON OI.parent = O.name WHERE O.requirement=%s and item_name=%s and O.status = 'Approved'""", (self.requirement,ii.item_name),as_dict=1)
+                if len(sum_qty) > 0 and sum_qty[0].final_moq != sum_qty_orders[0].sum_qty:
+                    frappe.throw("Total Order MOQ (" + str(sum_qty_orders[0].sum_qty) + ") For Item " + ii.item_name + " is not equal to declared Final MOQ ("+ str(sum_qty[0].final_moq) + ") in Requirement")
+                self.check_items(items, ii, sum_qty[0].final_moq)
+
         obj = {
             "doctype": "Purchase Order",
             "supplier": self.supplier_master,
@@ -142,6 +142,22 @@ class Order(Document):
         print(obj)
         new_po = frappe.get_doc(obj).insert()
         return new_po.name
+    def check_items(self, items,item, qty):
+        existing_item = False
+        for i in items:
+            if i['item_code'] == item.item:
+                i['qty'] += item.moq
+                existing_item = True
+
+        if not existing_item:
+            items.append({
+                "item_code": item.item,
+                "item_name": item.item_description,
+                "qty": item.moq,
+                "rate": item.price,
+                "schedule_date": self.date_of_requirement,
+                "final_moq": qty
+            })
     def get_po_items(self):
         items = []
         for i in self.order_items:

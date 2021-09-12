@@ -179,6 +179,7 @@ class Requirement(Document):
 							"moq": i.__dict__[country_moq_fields[x]],
 							"uom": i.uom,
 							"price": i.final_price,
+							"final_moq": i.final_moq
 						})
 						order_exist.save()
 						query = """ UPDATE `tabRequirement Item` SET {0}='{1}' WHERE name='{2}'""".format(
@@ -200,6 +201,7 @@ class Requirement(Document):
 									"moq": i.__dict__[country_moq_fields[x]],
 									"uom": i.uom,
 									"price": i.final_price,
+									"final_moq": i.final_moq
 								}
 							]
 						}
