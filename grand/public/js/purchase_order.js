@@ -1,12 +1,17 @@
 cur_frm.cscript.refresh = function () {
+    cur_frm.trigger("filter_order")
+}
+cur_frm.cscript.filter_order = function () {
+    var names = Array.from(cur_frm.doc.orders, x => "order" in x ? x.order:"")
     cur_frm.set_query('order', 'orders', () => {
     return {
-        filters: {
-            supplier_master: cur_frm.doc.supplier,
-            status: 'Approved'
-        }
+        filters: [
+            ["supplier_master", "=", cur_frm.doc.supplier],
+            ["status","=", "Approved"],
+            ["name", "not in", names]
+        ]
     }
-})
+    })
 }
 
 cur_frm.cscript.order = function (frm, cdt, cdn) {
@@ -30,7 +35,9 @@ cur_frm.cscript.order = function (frm, cdt, cdn) {
                     });
 
                     cur_frm.refresh_field('items');
-cur_frm.trigger("qty")
+                    cur_frm.trigger("qty")
+                    cur_frm.trigger("filter_order")
+
                 }
             } else {
 
@@ -42,6 +49,8 @@ cur_frm.trigger("qty")
                                 cur_frm.doc.items[xxx].qty += doc.order_items[x].moq
                                 cur_frm.refresh_field('items');
 cur_frm.trigger("qty")
+    cur_frm.trigger("filter_order")
+
                             }
                         }
                     } else {
@@ -58,6 +67,8 @@ cur_frm.trigger("qty")
 
                         cur_frm.refresh_field('items');
                         cur_frm.trigger("qty")
+                        cur_frm.trigger("filter_order")
+
                     }
 
 
@@ -80,10 +91,14 @@ cur_frm.cscript.before_orders_remove = function(frm, cdt, cdn){
                                 cur_frm.doc.items[xxx].qty -= doc.order_items[x].moq
                                 cur_frm.refresh_field('items');
                                 cur_frm.trigger("qty")
+                                cur_frm.trigger("filter_order")
+
                             } else if(cur_frm.doc.items[xxx].item_code === final_item_name && cur_frm.doc.items[xxx].qty === doc.order_items[x].moq){
                                 cur_frm.doc.items[xxx].qty -= doc.order_items[x].moq
                                  cur_frm.get_field("items").grid.grid_rows[x].remove();
                                 cur_frm.refresh_field('items');
+                                cur_frm.trigger("filter_order")
+
                             }
                         }
                     }

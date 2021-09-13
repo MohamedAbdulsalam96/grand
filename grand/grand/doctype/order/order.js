@@ -29,9 +29,9 @@ frappe.ui.form.on('Order', {
         var item_name = frappe.meta.get_docfield("Order Item", "item_name", cur_frm.doc.name);
         var item_description = frappe.meta.get_docfield("Order Item", "item_description", cur_frm.doc.name);
 
-        item_name_master.read_only = !cur_frm.doc.reorder
-        item_name.read_only = cur_frm.doc.reorder
-        item_description.read_only = cur_frm.doc.reorder
+        item_name_master.read_only = !cur_frm.doc.reorder && !cur_frm.doc.requirement_with_existing_item
+        item_name.read_only = cur_frm.doc.reorder || cur_frm.doc.requirement_with_existing_item
+        item_description.read_only = cur_frm.doc.reorder || cur_frm.doc.requirement_with_existing_item
     },
     refresh: function () {
         if(!cur_frm.doc.docstatus && !cur_frm.is_new() && cur_frm.doc.with_sku > 0 && cur_frm.doc.status === "Order Approved"){
@@ -55,10 +55,11 @@ frappe.ui.form.on('Order', {
         var item_name = frappe.meta.get_docfield("Order Item", "item_name", cur_frm.doc.name);
         var item_description = frappe.meta.get_docfield("Order Item", "item_description", cur_frm.doc.name);
 
-        item_name_master.read_only = !cur_frm.doc.reorder
-        item_name.read_only = cur_frm.doc.reorder
-        item_description.read_only = cur_frm.doc.reorder
-            if(!cur_frm.doc.docstatus && !cur_frm.is_new() && cur_frm.doc.status === "Pending" ){
+        item_name_master.read_only = !cur_frm.doc.reorder && !cur_frm.doc.requirement_with_existing_item
+        item_name.read_only = cur_frm.doc.reorder || cur_frm.doc.requirement_with_existing_item
+        item_description.read_only = cur_frm.doc.reorder || cur_frm.doc.requirement_with_existing_item
+
+        if(!cur_frm.doc.docstatus && !cur_frm.is_new() && cur_frm.doc.status === "Pending" ){
                 var button1 = cur_frm.add_custom_button(__("Approve Order"), () => {
                     change_status(cur_frm,"Order Approved")
                 }).css({'color':'white','font-weight': 'bold', 'background-color': 'blue'});
@@ -172,9 +173,21 @@ frappe.ui.form.on('Order', {
         var item_name_master = frappe.meta.get_docfield("Order Item", "item_name_master", cur_frm.doc.name);
         var item_name = frappe.meta.get_docfield("Order Item", "item_name", cur_frm.doc.name);
         var item_description = frappe.meta.get_docfield("Order Item", "item_description", cur_frm.doc.name);
-        item_name_master.read_only = !cur_frm.doc.reorder
-        item_name.read_only = cur_frm.doc.reorder
-        item_description.read_only = cur_frm.doc.reorder
+        item_name_master.read_only = !cur_frm.doc.reorder && !cur_frm.doc.requirement_with_existing_item
+        item_name.read_only = cur_frm.doc.reorder || cur_frm.doc.requirement_with_existing_item
+        item_description.read_only = cur_frm.doc.reorder || cur_frm.doc.requirement_with_existing_item
+    },
+    requirement_with_existing_item: function(frm) {
+        cur_frm.clear_table("order_items")
+        cur_frm.doc.requirement = ""
+        cur_frm.refresh_field("order_items")
+        cur_frm.refresh_field("requirement")
+        var item_name_master = frappe.meta.get_docfield("Order Item", "item_name_master", cur_frm.doc.name);
+        var item_name = frappe.meta.get_docfield("Order Item", "item_name", cur_frm.doc.name);
+        var item_description = frappe.meta.get_docfield("Order Item", "item_description", cur_frm.doc.name);
+        item_name_master.read_only = !cur_frm.doc.reorder && !cur_frm.doc.requirement_with_existing_item
+        item_name.read_only = cur_frm.doc.reorder || cur_frm.doc.requirement_with_existing_item
+        item_description.read_only = cur_frm.doc.reorder || cur_frm.doc.requirement_with_existing_item
     },
     requirement: function(frm) {
 	    cur_frm.clear_table("order_items")
