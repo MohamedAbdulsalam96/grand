@@ -13,7 +13,7 @@
   "purchase_order_ref",
   "column_break_4",
   "eta",
-  "etd",
+  "purchase_order_date",
   "shipment_no",
   "section_break_8",
   "order_tracking_location",
@@ -29,11 +29,6 @@
    "fieldname": "eta",
    "fieldtype": "Date",
    "label": "ETA"
-  },
-  {
-   "fieldname": "etd",
-   "fieldtype": "Date",
-   "label": "ETD"
   },
   {
    "fieldname": "shipment_no",
@@ -100,12 +95,18 @@
    "hidden": 1,
    "label": "Status",
    "options": "Waiting\nIn Production\nPacking\nReady for Shipment\nWaiting for Shipment\nShipped\nReceiving to Store\nDispatching to Store\nCompleted"
+  },
+  {
+   "fetch_from": "purchase_order_ref.transaction_date",
+   "fieldname": "purchase_order_date",
+   "fieldtype": "Date",
+   "label": "Purchase Order Date"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-08-10 21:52:26.570307",
+ "modified": "2021-09-14 01:04:03.783424",
  "modified_by": "Administrator",
  "module": "Grand",
  "name": "Order Tracking",

@@ -10,7 +10,7 @@ class OrderTracking(Document):
 		self.add_predefined_status()
 
 	def add_predefined_status(self):
-		if not self.order_tracking_status:
+		if not self.order_tracking_location:
 			statuses = [
 				{'status': "Waiting", "days": 5},
 				{'status': "In Production", "days": 5},
@@ -21,7 +21,7 @@ class OrderTracking(Document):
 				{'status': "Receiving to Store", "days": 5},
 				{'status': "Dispatching to Store", "days": 5}
 			]
-			start_date = self.eta
+			start_date = self.purchase_order_date
 			for status in statuses:
 				end_date = (
 				datetime.datetime.strptime(str(start_date), "%Y-%m-%d") + datetime.timedelta(days=5)).date()
@@ -32,7 +32,7 @@ class OrderTracking(Document):
 					"end_date": str(end_date),
 				}
 				print(obj)
-				self.append("order_status", obj)
+				self.append("order_tracking_location", obj)
 				start_date = (
 					datetime.datetime.strptime(str(start_date), "%Y-%m-%d") + datetime.timedelta(days=5)).date()
 	@frappe.whitelist()

@@ -13,6 +13,7 @@ def on_submit_po(doc, method):
         "purchase_order_ref": doc.name,
         "order_tracking_location": get_order_tracking_location(doc),
         "order_tracking_items": get_order_tracking_items(doc),
+        "purchase_order_date": doc.transaction_date,
     }
     frappe.get_doc(obj).insert()
 
