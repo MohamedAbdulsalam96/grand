@@ -3,7 +3,7 @@
 
 import frappe
 from frappe.model.document import Document
-
+import datetime
 class Order(Document):
     def validate(self):
         self.with_sku = 0
@@ -11,12 +11,39 @@ class Order(Document):
             if i.new_sku:
                self.with_sku = 1
 
+        self.add_predefined_status()
+
+    def add_predefined_status(self):
+        if not self.order_status:
+
+            statuses = [
+                {'status': "Order Approved", "days": 5},
+                {'status': "Identifying Competitor Product", "days": 5},
+                {'status': "Checking Requirement", "days": 5},
+                {'status': "Finalizing Order Quantity", "days": 5},
+                {'status': "Negotiating Price", "days": 5},
+                {'status': "Approved", "days": 5}
+            ]
+            start_date = self.date_of_requirement
+            for status in statuses:
+                end_date = (datetime.datetime.strptime(str(start_date), "%Y-%m-%d") + datetime.timedelta(days=5)).date()
+                obj = {
+                    "status": status['status'],
+                    "start_date": str(start_date),
+                    "days": status['days'],
+                    "end_date": str(end_date),
+                }
+                print(obj)
+                self.append("order_status", obj)
+                start_date = (
+                datetime.datetime.strptime(str(start_date), "%Y-%m-%d") + datetime.timedelta(days=5)).date()
+
     @frappe.whitelist()
     def change_status(self, status):
         frappe.db.sql(""" UPDATE `tabOrder` SET status=%s WHERE name=%s """, (status, self.name))
         frappe.db.commit()
 
-        self.add_status(status)
+        # self.add_status(status)
 
     @frappe.whitelist()
     def add_status(self, status):
@@ -124,9 +151,9 @@ class Order(Document):
 
                 sum_qty = frappe.db.sql(""" SELECT * FROM `tabRequirement Item` WHERE parent=%s and item_name=%s""", (self.requirement,ii.item_name),as_dict=1)
                 sum_qty_orders = frappe.db.sql(""" SELECT SUM(OI.moq) as sum_qty FROM `tabOrder` O INNER JOIN `tabOrder Item` OI ON OI.parent = O.name WHERE O.requirement=%s and item_name=%s and O.status = 'Approved'""", (self.requirement,ii.item_name),as_dict=1)
-                if len(sum_qty) > 0 and sum_qty[0].final_moq != sum_qty_orders[0].sum_qty:
+                if len(sum_qty) > 0 and sum_qty[0].final_moq != sum_qty_orders[0].sum_qty and not sum_qty[0].no_required_moq:
                     frappe.throw("Total Order MOQ (" + str(sum_qty_orders[0].sum_qty) + ") For Item " + ii.item_name + " is not equal to declared Final MOQ ("+ str(sum_qty[0].final_moq) + ") in Requirement")
-                self.check_items(items, ii, sum_qty[0].final_moq)
+                self.check_items(items, ii, sum_qty[0].final_moq if not sum_qty[0].no_required_moq else sum_qty[0].qty_required)
 
         obj = {
             "doctype": "Purchase Order",

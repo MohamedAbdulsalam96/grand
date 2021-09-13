@@ -9,6 +9,7 @@
   "item_description",
   "item_group",
   "uom",
+  "no_required_moq",
   "final_moq",
   "final_price",
   "column_break_4",
@@ -45,7 +46,8 @@
   "column_break_38",
   "country_based_moq_5",
   "column_break_40",
-  "order_5"
+  "order_5",
+  "order_name"
  ],
  "fields": [
   {
@@ -95,7 +97,7 @@
   {
    "allow_on_submit": 1,
    "columns": 1,
-   "depends_on": "eval: parent.docstatus && (parent.status == \"Negotiating Price & MOQ\" || parent.status == \"Approved\" || parent.status == \"Reject\" || parent.status == \"Quotation Sent\" )",
+   "depends_on": "eval: !doc.no_required_moq && parent.docstatus && (parent.status == \"Negotiating Price & MOQ\" || parent.status == \"Approved\" || parent.status == \"Reject\" || parent.status == \"Quotation Sent\" )",
    "fieldname": "final_moq",
    "fieldtype": "Float",
    "in_list_view": 1,
@@ -104,7 +106,7 @@
   },
   {
    "allow_on_submit": 1,
-   "depends_on": "eval: parent.docstatus && (parent.status == \"Negotiating Price & MOQ\" || parent.status == \"Approved\" || parent.status == \"Reject\" || parent.status == \"Quotation Sent\" )",
+   "depends_on": "eval: !doc.no_required_moq && parent.docstatus && (parent.status == \"Negotiating Price & MOQ\" || parent.status == \"Approved\" || parent.status == \"Reject\" || parent.status == \"Quotation Sent\" )",
    "fieldname": "final_price",
    "fieldtype": "Currency",
    "label": "Final Price",
@@ -117,7 +119,7 @@
   },
   {
    "allow_on_submit": 1,
-   "depends_on": "eval: parent.docstatus && (parent.status == \"Negotiating Price & MOQ\" || parent.status == \"Approved\" || parent.status == \"Reject\" || parent.status == \"Quotation Sent\" )",
+   "depends_on": "eval: !doc.no_required_moq && parent.docstatus && (parent.status == \"Negotiating Price & MOQ\" || parent.status == \"Approved\" || parent.status == \"Reject\" || parent.status == \"Quotation Sent\" )",
    "fieldname": "country_1",
    "fieldtype": "Link",
    "label": "Country 1",
@@ -127,7 +129,7 @@
   },
   {
    "allow_on_submit": 1,
-   "depends_on": "eval: parent.docstatus && (parent.status == \"Negotiating Price & MOQ\" || parent.status == \"Approved\" || parent.status == \"Reject\" || parent.status == \"Quotation Sent\" )",
+   "depends_on": "eval: !doc.no_required_moq && parent.docstatus && (parent.status == \"Negotiating Price & MOQ\" || parent.status == \"Approved\" || parent.status == \"Reject\" || parent.status == \"Quotation Sent\" )",
    "fieldname": "country_2",
    "fieldtype": "Link",
    "label": "Country 2",
@@ -137,7 +139,7 @@
   },
   {
    "allow_on_submit": 1,
-   "depends_on": "eval: parent.docstatus && (parent.status == \"Negotiating Price & MOQ\" || parent.status == \"Approved\" || parent.status == \"Reject\" || parent.status == \"Quotation Sent\" )",
+   "depends_on": "eval: !doc.no_required_moq && parent.docstatus && (parent.status == \"Negotiating Price & MOQ\" || parent.status == \"Approved\" || parent.status == \"Reject\" || parent.status == \"Quotation Sent\" )",
    "fieldname": "country_3",
    "fieldtype": "Link",
    "label": "Country 3",
@@ -147,7 +149,7 @@
   },
   {
    "allow_on_submit": 1,
-   "depends_on": "eval: parent.docstatus && (parent.status == \"Negotiating Price & MOQ\" || parent.status == \"Approved\" || parent.status == \"Reject\" || parent.status == \"Quotation Sent\" )",
+   "depends_on": "eval: !doc.no_required_moq && parent.docstatus && (parent.status == \"Negotiating Price & MOQ\" || parent.status == \"Approved\" || parent.status == \"Reject\" || parent.status == \"Quotation Sent\" )",
    "fieldname": "country_4",
    "fieldtype": "Link",
    "label": "Country 4",
@@ -157,7 +159,7 @@
   },
   {
    "allow_on_submit": 1,
-   "depends_on": "eval: parent.docstatus && (parent.status == \"Negotiating Price & MOQ\" || parent.status == \"Approved\" || parent.status == \"Reject\" || parent.status == \"Quotation Sent\" )",
+   "depends_on": "eval: !doc.no_required_moq && parent.docstatus && (parent.status == \"Negotiating Price & MOQ\" || parent.status == \"Approved\" || parent.status == \"Reject\" || parent.status == \"Quotation Sent\" )",
    "fieldname": "country_5",
    "fieldtype": "Link",
    "label": "Country 5",
@@ -171,7 +173,7 @@
   },
   {
    "allow_on_submit": 1,
-   "depends_on": "eval: parent.docstatus && (parent.status == \"Negotiating Price & MOQ\" || parent.status == \"Approved\" || parent.status == \"Reject\" || parent.status == \"Quotation Sent\" )",
+   "depends_on": "eval: !doc.no_required_moq && parent.docstatus && (parent.status == \"Negotiating Price & MOQ\" || parent.status == \"Approved\" || parent.status == \"Reject\" || parent.status == \"Quotation Sent\" )",
    "fieldname": "country_based_moq_1",
    "fieldtype": "Float",
    "label": "Country based MOQ 1",
@@ -180,7 +182,7 @@
   },
   {
    "allow_on_submit": 1,
-   "depends_on": "eval: parent.docstatus && (parent.status == \"Negotiating Price & MOQ\" || parent.status == \"Approved\" || parent.status == \"Reject\" || parent.status == \"Quotation Sent\" )",
+   "depends_on": "eval: !doc.no_required_moq && parent.docstatus && (parent.status == \"Negotiating Price & MOQ\" || parent.status == \"Approved\" || parent.status == \"Reject\" || parent.status == \"Quotation Sent\" )",
    "fieldname": "country_based_moq_2",
    "fieldtype": "Float",
    "label": "Country based MOQ 2",
@@ -189,7 +191,7 @@
   },
   {
    "allow_on_submit": 1,
-   "depends_on": "eval: parent.docstatus && (parent.status == \"Negotiating Price & MOQ\" || parent.status == \"Approved\" || parent.status == \"Reject\" || parent.status == \"Quotation Sent\" )",
+   "depends_on": "eval: !doc.no_required_moq && parent.docstatus && (parent.status == \"Negotiating Price & MOQ\" || parent.status == \"Approved\" || parent.status == \"Reject\" || parent.status == \"Quotation Sent\" )",
    "fieldname": "country_based_moq_3",
    "fieldtype": "Float",
    "label": "Country based MOQ 3",
@@ -198,7 +200,7 @@
   },
   {
    "allow_on_submit": 1,
-   "depends_on": "eval: parent.docstatus && (parent.status == \"Negotiating Price & MOQ\" || parent.status == \"Approved\" || parent.status == \"Reject\" || parent.status == \"Quotation Sent\" )",
+   "depends_on": "eval: !doc.no_required_moq && parent.docstatus && (parent.status == \"Negotiating Price & MOQ\" || parent.status == \"Approved\" || parent.status == \"Reject\" || parent.status == \"Quotation Sent\" )",
    "fieldname": "country_based_moq_4",
    "fieldtype": "Float",
    "label": "Country based MOQ 4",
@@ -207,7 +209,7 @@
   },
   {
    "allow_on_submit": 1,
-   "depends_on": "eval: parent.docstatus && (parent.status == \"Negotiating Price & MOQ\" || parent.status == \"Approved\" || parent.status == \"Reject\" || parent.status == \"Quotation Sent\" )",
+   "depends_on": "eval: !doc.no_required_moq && parent.docstatus && (parent.status == \"Negotiating Price & MOQ\" || parent.status == \"Approved\" || parent.status == \"Reject\" || parent.status == \"Quotation Sent\" )",
    "fieldname": "country_based_moq_5",
    "fieldtype": "Float",
    "label": "Country based MOQ 5",
@@ -319,12 +321,27 @@
    "label": "Order 5",
    "options": "Order",
    "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "0",
+   "depends_on": "eval: parent.docstatus && (parent.status == \"Negotiating Price & MOQ\" || parent.status == \"Approved\" || parent.status == \"Reject\" || parent.status == \"Quotation Sent\" )",
+   "fieldname": "no_required_moq",
+   "fieldtype": "Check",
+   "label": "MOQ Not Requerd",
+   "read_only_depends_on": "eval: parent.docstatus && (parent.status != \"Negotiating Price & MOQ\")"
+  },
+  {
+   "fieldname": "order_name",
+   "fieldtype": "Link",
+   "label": "Order",
+   "options": "Order"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-09-03 23:11:04.952366",
+ "modified": "2021-09-13 23:15:08.881879",
  "modified_by": "Administrator",
  "module": "Grand",
  "name": "Requirement Item",
