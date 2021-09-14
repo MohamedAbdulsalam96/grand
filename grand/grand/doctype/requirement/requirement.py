@@ -22,11 +22,11 @@ class Requirement(Document):
 	def add_predefined_status(self):
 		if not self.requirement_status:
 			statuses = [
-				{'status': "Identifying Supplier", "days": 5},
-				{'status': "Checking Quality", "days": 5},
-				{'status': "Waiting for Quote", "days": 5},
-				{'status': "Negotiating Price & MOQ", "days": 5},
-				{'status': "Quotation Sent", "days": 5}
+				{'status': "Identifying Supplier", "days": 7},
+				{'status': "Checking Quality", "days": 2},
+				{'status': "Waiting for Quote", "days": 2},
+				{'status': "Negotiating Price & MOQ", "days": 2},
+				{'status': "Quotation Sent", "days": 2}
 			 ]
 			start_date = self.posting_date
 			for status in statuses:

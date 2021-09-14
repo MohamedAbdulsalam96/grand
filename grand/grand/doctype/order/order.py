@@ -17,12 +17,12 @@ class Order(Document):
         if not self.order_status:
 
             statuses = [
-                {'status': "Order Approved", "days": 5},
+                {'status': "Order Approved", "days": 1},
                 {'status': "Identifying Competitor Product", "days": 5},
-                {'status': "Checking Requirement", "days": 5},
-                {'status': "Finalizing Order Quantity", "days": 5},
-                {'status': "Negotiating Price", "days": 5},
-                {'status': "Approved", "days": 5}
+                {'status': "Checking Requirement", "days": 2},
+                {'status': "Finalizing Order Quantity", "days": 1},
+                {'status': "Negotiating Price", "days": 1},
+                {'status': "Approved", "days": 1}
             ]
             start_date = self.date_of_requirement
             for status in statuses:

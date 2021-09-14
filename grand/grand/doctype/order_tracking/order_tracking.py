@@ -13,13 +13,13 @@ class OrderTracking(Document):
 		if not self.order_tracking_location:
 			statuses = [
 				{'status': "Waiting", "days": 5},
-				{'status': "In Production", "days": 5},
+				{'status': "In Production", "days": 10},
 				{'status': "Packing", "days": 5},
 				{'status': "Ready for Shipment", "days": 5},
 				{'status': "Waiting for Shipment", "days": 5},
-				{'status': "Shipped", "days": 5},
-				{'status': "Receiving to Store", "days": 5},
-				{'status': "Dispatching to Store", "days": 5}
+				{'status': "Shipped", "days": 2},
+				{'status': "Receiving to Store", "days": 30},
+				{'status': "Dispatching to Store", "days": 2}
 			]
 			start_date = self.purchase_order_date
 			for status in statuses:
