@@ -43,11 +43,15 @@ class Requirement(Document):
 
 	@frappe.whitelist()
 	def check_for_quotation(self):
+
 		country_moq_fields = ['country_based_moq_1', 'country_based_moq_2', 'country_based_moq_3',
 							  'country_based_moq_4', 'country_based_moq_5']
 		country_fields = ['country_1','country_2','country_3','country_4','country_5']
-		if not self.supplier_id:
+		if not self.supplier_id and not self.existing_supplier:
 			frappe.throw("Supplier is not created")
+
+		if not self.supplier_id and self.existing_supplier:
+			frappe.throw("Please Select Supplier")
 
 		for i in self.requirement_items:
 			if (not i.final_moq or not i.final_price) and not i.no_required_moq:
@@ -181,6 +185,9 @@ class Requirement(Document):
 
 	@frappe.whitelist()
 	def create_order(self):
+		file = frappe.db.sql(""" SELECT * FROM `tabFile` WHERE attached_to_name=%s """, (self.name), as_dict=1)
+		if len(file) == 0:
+			frappe.throw("Attachment is Mandatory")
 		country_fields = ['country_1', 'country_2', 'country_3', 'country_4', 'country_5']
 		country_moq_fields = ['country_based_moq_1', 'country_based_moq_2', 'country_based_moq_3',
 							  'country_based_moq_4', 'country_based_moq_5']

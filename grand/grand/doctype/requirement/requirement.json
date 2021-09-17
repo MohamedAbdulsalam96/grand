@@ -10,6 +10,7 @@
   "status",
   "source_country",
   "visibility",
+  "existing_supplier",
   "supplier_id",
   "supplier",
   "create_supplier",
@@ -112,6 +113,7 @@
   },
   {
    "allow_on_submit": 1,
+   "depends_on": "eval: !doc.existing_supplier",
    "fieldname": "supplier",
    "fieldtype": "Data",
    "label": "Supplier"
@@ -126,8 +128,9 @@
    "fieldname": "supplier_id",
    "fieldtype": "Link",
    "label": "Supplier ID",
+   "mandatory_depends_on": "eval: doc.existing_supplier",
    "options": "Supplier",
-   "read_only": 1
+   "read_only_depends_on": "eval: !doc.existing_supplier"
   },
   {
    "fieldname": "currency",
@@ -148,12 +151,18 @@
    "fieldtype": "Link",
    "label": "Requested Country",
    "options": "Country"
+  },
+  {
+   "default": "0",
+   "fieldname": "existing_supplier",
+   "fieldtype": "Check",
+   "label": "Existing Supplier"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-09-13 22:00:23.040249",
+ "modified": "2021-09-17 22:28:47.329916",
  "modified_by": "Administrator",
  "module": "Grand",
  "name": "Requirement",
