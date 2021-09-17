@@ -39,22 +39,23 @@
   {
    "allow_on_submit": 1,
    "fieldname": "end_date",
-   "fieldtype": "Data",
+   "fieldtype": "Date",
    "in_list_view": 1,
    "label": "End Date"
   },
   {
    "allow_on_submit": 1,
    "fieldname": "days",
-   "fieldtype": "Data",
+   "fieldtype": "Float",
    "in_list_view": 1,
-   "label": "Days"
+   "label": "Days",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-09-13 22:24:16.267411",
+ "modified": "2021-09-17 23:00:08.836050",
  "modified_by": "Administrator",
  "module": "Grand",
  "name": "Requirement Status",
