@@ -43,7 +43,9 @@ class Requirement(Document):
 
 	@frappe.whitelist()
 	def check_for_quotation(self):
-
+		file = frappe.db.sql(""" SELECT * FROM `tabFile` WHERE attached_to_name=%s """, (self.name), as_dict=1)
+		if len(file) == 0:
+			frappe.throw("Attachment is Mandatory")
 		country_moq_fields = ['country_based_moq_1', 'country_based_moq_2', 'country_based_moq_3',
 							  'country_based_moq_4', 'country_based_moq_5']
 		country_fields = ['country_1','country_2','country_3','country_4','country_5']
@@ -185,9 +187,7 @@ class Requirement(Document):
 
 	@frappe.whitelist()
 	def create_order(self):
-		file = frappe.db.sql(""" SELECT * FROM `tabFile` WHERE attached_to_name=%s """, (self.name), as_dict=1)
-		if len(file) == 0:
-			frappe.throw("Attachment is Mandatory")
+
 		country_fields = ['country_1', 'country_2', 'country_3', 'country_4', 'country_5']
 		country_moq_fields = ['country_based_moq_1', 'country_based_moq_2', 'country_based_moq_3',
 							  'country_based_moq_4', 'country_based_moq_5']
