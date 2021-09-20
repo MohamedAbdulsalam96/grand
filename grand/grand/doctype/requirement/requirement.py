@@ -198,6 +198,7 @@ class Requirement(Document):
 					"doctype": "Order",
 					"requirement": self.name,
 					"date_of_requirement": self.date_of_requirement,
+					"posting_date": self.posting_date,
 					"priority": self.priority,
 					"country": self.requested_country,
 					"supplier_master": self.supplier_id,
@@ -245,6 +246,7 @@ class Requirement(Document):
 							"priority": self.priority,
 							"country": i.__dict__[country_fields[x]],
 							"supplier_master": self.supplier_id,
+							"posting_date": self.posting_date,
 							"order_items": [
 								{
 									"item_name": i.item_name,

@@ -16,6 +16,7 @@
   "supplier_name",
   "column_break_5",
   "date_of_requirement",
+  "posting_date",
   "advance_payment",
   "priority",
   "section_break_14",
@@ -187,11 +188,16 @@
    "fieldname": "requirement_with_existing_item",
    "fieldtype": "Check",
    "label": "Requirement with Existing Item"
+  },
+  {
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "Posting Date"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-09-13 15:04:50.887718",
+ "modified": "2021-09-20 14:09:39.035855",
  "modified_by": "Administrator",
  "module": "Grand",
  "name": "Order",
