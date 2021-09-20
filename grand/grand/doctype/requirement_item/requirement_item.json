@@ -54,7 +54,8 @@
    "fieldname": "item_name",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Item Name"
+   "label": "Item Name",
+   "reqd": 1
   },
   {
    "fieldname": "item_description",
@@ -74,7 +75,8 @@
    "fieldname": "qty_required",
    "fieldtype": "Float",
    "in_list_view": 1,
-   "label": "Qty Required"
+   "label": "Qty Required",
+   "reqd": 1
   },
   {
    "columns": 1,
@@ -83,7 +85,8 @@
    "fieldtype": "Currency",
    "in_list_view": 1,
    "label": "Starting Price",
-   "options": "currency"
+   "options": "currency",
+   "reqd": 1
   },
   {
    "columns": 1,
@@ -234,7 +237,8 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "UOM",
-   "options": "UOM"
+   "options": "UOM",
+   "reqd": 1
   },
   {
    "fieldname": "column_break_24",
@@ -342,7 +346,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-09-17 22:31:54.643482",
+ "modified": "2021-09-20 08:51:38.089647",
  "modified_by": "Administrator",
  "module": "Grand",
  "name": "Requirement Item",

@@ -24,7 +24,7 @@ class OrderTracking(Document):
 			start_date = self.purchase_order_date
 			for status in statuses:
 				end_date = (
-				datetime.datetime.strptime(str(start_date), "%Y-%m-%d") + datetime.timedelta(days=5)).date()
+				datetime.datetime.strptime(str(start_date), "%Y-%m-%d") + datetime.timedelta(days=status['days'])).date()
 				obj = {
 					"status": status['status'],
 					"start_date": str(start_date),
@@ -34,7 +34,7 @@ class OrderTracking(Document):
 				print(obj)
 				self.append("order_tracking_location", obj)
 				start_date = (
-					datetime.datetime.strptime(str(start_date), "%Y-%m-%d") + datetime.timedelta(days=5)).date()
+					datetime.datetime.strptime(str(start_date), "%Y-%m-%d") + datetime.timedelta(days=status['days'])).date()
 	@frappe.whitelist()
 	def change_status(self, status):
 		frappe.db.sql(""" UPDATE `tabOrder Tracking` SET status=%s WHERE name=%s """, (status, self.name))

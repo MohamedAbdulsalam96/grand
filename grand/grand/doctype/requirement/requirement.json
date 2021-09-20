@@ -125,6 +125,7 @@
    "label": "Create Supplier"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "supplier_id",
    "fieldtype": "Link",
    "label": "Supplier ID",
@@ -153,6 +154,7 @@
    "options": "Country"
   },
   {
+   "allow_on_submit": 1,
    "default": "0",
    "fieldname": "existing_supplier",
    "fieldtype": "Check",
@@ -162,7 +164,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-09-17 22:28:47.329916",
+ "modified": "2021-09-20 13:38:54.170437",
  "modified_by": "Administrator",
  "module": "Grand",
  "name": "Requirement",

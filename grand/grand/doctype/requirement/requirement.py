@@ -30,7 +30,7 @@ class Requirement(Document):
 			 ]
 			start_date = self.posting_date
 			for status in statuses:
-				end_date = (datetime.datetime.strptime(str(start_date), "%Y-%m-%d") + datetime.timedelta(days=5)).date()
+				end_date = (datetime.datetime.strptime(str(start_date), "%Y-%m-%d") + datetime.timedelta(days=status['days'])).date()
 				obj = {
 					"status": status['status'],
 					"start_date": str(start_date),
@@ -39,7 +39,7 @@ class Requirement(Document):
 				}
 				print(obj)
 				self.append("requirement_status",obj)
-				start_date = (datetime.datetime.strptime(str(start_date), "%Y-%m-%d") + datetime.timedelta(days=5)).date()
+				start_date = (datetime.datetime.strptime(str(start_date), "%Y-%m-%d") + datetime.timedelta(days=status['days'])).date()
 
 	@frappe.whitelist()
 	def check_for_quotation(self):
