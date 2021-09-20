@@ -1,8 +1,14 @@
 cur_frm.cscript.refresh = function () {
     cur_frm.trigger("filter_order")
 }
+cur_frm.cscript.supplier = function () {
+    cur_frm.trigger("filter_order")
+}
 cur_frm.cscript.filter_order = function () {
-    var names = Array.from(cur_frm.doc.orders, x => "order" in x ? x.order:"")
+    var names=[]
+    if(cur_frm.doc.orders){
+        names = cur_frm.doc.orders.map(x => "order" in x ? x.order:"")
+    }
     cur_frm.set_query('order', 'orders', () => {
     return {
         filters: [
