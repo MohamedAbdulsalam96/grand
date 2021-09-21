@@ -15,6 +15,7 @@
   "column_break_4",
   "order_tracking",
   "order_tracking_date",
+  "country",
   "eta",
   "shipment_no",
   "section_break_8",
@@ -123,12 +124,21 @@
    "fieldtype": "Date",
    "label": "Order Tracking Date",
    "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fetch_from": "order_tracking.country",
+   "fieldname": "country",
+   "fieldtype": "Link",
+   "label": "Country",
+   "options": "Country",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-09-21 14:50:10.152836",
+ "modified": "2021-09-21 17:34:31.597181",
  "modified_by": "Administrator",
  "module": "Grand",
  "name": "Order Tracking",
