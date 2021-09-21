@@ -8,12 +8,14 @@
  "field_order": [
   "status",
   "naming_series",
+  "purchase_order_ref",
+  "purchase_order_date",
   "supplier",
   "supplier_name",
-  "purchase_order_ref",
   "column_break_4",
+  "order_tracking",
+  "order_tracking_date",
   "eta",
-  "purchase_order_date",
   "shipment_no",
   "section_break_8",
   "order_tracking_location",
@@ -45,10 +47,12 @@
    "read_only": 1
   },
   {
+   "fetch_from": "purchase_order_ref.supplier",
    "fieldname": "supplier",
    "fieldtype": "Link",
    "label": "Supplier",
-   "options": "Supplier"
+   "options": "Supplier",
+   "read_only": 1
   },
   {
    "fetch_from": "supplier.supplier_name",
@@ -60,6 +64,7 @@
   {
    "fieldname": "purchase_order_ref",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Purchase Order Ref",
    "options": "Purchase Order"
   },
@@ -69,6 +74,7 @@
   },
   {
    "allow_on_submit": 1,
+   "depends_on": "eval: doc.docstatus",
    "fieldname": "order_tracking_location",
    "fieldtype": "Table",
    "label": "Order Tracking Location",
@@ -94,19 +100,35 @@
    "fieldtype": "Select",
    "hidden": 1,
    "label": "Status",
-   "options": "Waiting\nIn Production\nPacking\nReady for Shipment\nWaiting for Shipment\nShipped\nReceiving to Store\nDispatching to Store\nCompleted"
+   "options": "Waiting\nIn Production\nPacking\nReady for Shipment\nWaiting for Shipment\nShipped\nReceiving to Store\nDispatching to Store\nCompleted\nPending"
   },
   {
    "fetch_from": "purchase_order_ref.transaction_date",
    "fieldname": "purchase_order_date",
    "fieldtype": "Date",
    "label": "Purchase Order Date"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "order_tracking",
+   "fieldtype": "Link",
+   "label": "Order Tracking",
+   "options": "Order Tracking",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fetch_from": "order_tracking.purchase_order_date",
+   "fieldname": "order_tracking_date",
+   "fieldtype": "Date",
+   "label": "Order Tracking Date",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-09-14 01:04:03.783424",
+ "modified": "2021-09-21 14:50:10.152836",
  "modified_by": "Administrator",
  "module": "Grand",
  "name": "Order Tracking",

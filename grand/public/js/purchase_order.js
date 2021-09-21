@@ -1,6 +1,33 @@
+var existing_order = false
+
 cur_frm.cscript.refresh = function () {
     cur_frm.trigger("filter_order")
-}
+        frappe.call({
+                    method: "grand.doc_events.purchase_order.check_order_tracking",
+                    args:{
+                        name: cur_frm.doc.name
+                    },
+                    async: false,
+                    callback: function (r) {
+                        if (cur_frm.doc.docstatus && !r.message) {
+                            cur_frm.add_custom_button(__("Order Tracking"), () => {
+                                frappe.call({
+                                method: "grand.doc_events.purchase_order.create_order_tracking",
+                                args: {
+                                    doc: cur_frm.doc
+                                },
+                                callback: function (rr) {
+                                    cur_frm.reload_doc()
+                                                                        frappe.set_route("Form", "Order Tracking", rr.message);
+
+                                }
+                                })
+                        }).css({'color': 'white', 'font-weight': 'bold', 'background-color': 'blue'});
+                        }
+                    }
+                })
+
+        }
 cur_frm.cscript.supplier = function () {
     cur_frm.trigger("filter_order")
 }
